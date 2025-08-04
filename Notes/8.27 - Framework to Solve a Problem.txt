@@ -1,0 +1,55 @@
+The lecture outlines a structured process for problem-solving in programming, emphasizing steps beyond just coding. This framework is crucial for both coding exercises and technical interviews.
+
+The Process to Solve a Problem
+The biggest mistake students make is directly jumping into writing code. A systematic approach leads to more efficient and bug-free solutions.
+1. Analyze the Problem
+	• Understand Inputs and Outputs: Clearly identify what data you are given and what the expected result (printed or returned) should be.
+	• Identify Constraints: Look for limitations on input size, variable ranges, time complexity, memory limits, or any other specific conditions mentioned in the problem. This initial analysis guides the choice of algorithms and data structures.
+	
+2. Break Down the Problem into Smaller Sub-parts
+	• For complex problems, divide them into smaller, manageable sub-problems.
+	• Avoid trying to solve the entire problem at once. A vague overall idea is prone to errors and extensive debugging.
+	• Philosophy: "Think twice, code once."
+	
+3. Enlist or Recall Concepts
+	• Based on the problem's nature (e.g., involves lists, dictionaries, sets), quickly recall relevant data structure properties and associated operations. 
+		○ Examples: Sets don't allow duplicates. Dictionary keys are unique and values are stored in pairs. Lists are mutable and ordered. Tuples are immutable.
+	• This step helps you consider appropriate tools and techniques before designing the solution.
+	
+4. Take 2-3 Examples
+	• Always ask for or generate multiple examples, especially if the problem statement provides only one.
+	• Purpose: To clarify understanding, expose edge cases, and avoid making assumptions.
+	• Red Flag in Interviews: Not asking for examples, even for seemingly straightforward problems, indicates a lack of thoroughness.
+	
+5. Write Pseudocode (or Scratch Code) on Paper
+	• Before writing actual code, outline the solution logic in pseudocode or a simplified, language-agnostic form.
+	• This doesn't require precise syntax but a clear representation of the steps.
+	• Benefit: Helps structure thoughts, identify logical gaps, and allows for quick iterations on the approach before investing time in detailed coding.
+	
+6. Dry Run It Once
+	• Take your chosen examples and manually trace their execution through your pseudocode or scratch logic.
+	• Purpose: To verify if the logic produces the expected output for the given examples and to catch potential errors or misunderstandings in your approach. This helps identify bugs in the algorithm before coding.
+	
+7. Write Down Your Code (Solution)
+	• Only after thoroughly analyzing, breaking down, planning with pseudocode, and dry-running, should you begin to write the actual code.
+	• Following the previous steps significantly reduces the number of errors and bugs in the initial code, leading to a much more efficient coding process.
+	
+8. Look Out for Edge Cases / Boundary Conditions (Crucial Step)
+	• This is a common reason for code failure even after general logic seems correct.
+	• Examples: 
+		○ What if a list is empty when calculating its length?
+		○ What if a number is zero in a division problem?
+		○ What about very large or very small inputs (constraints)?
+	• Actively consider minimum, maximum, and unusual inputs that might break the logic. This is an essential part of robust problem-solving.
+
+Overall Framework Summary:
+	1. Analyze the problem (Input, Output, Constraints).
+	2. Break Down the problem (into smaller sub-parts).
+	3. Enlist/Recall relevant concepts (data structures, algorithms).
+	4. Take 2-3 Examples (to clarify understanding and find edge cases).
+	5. Write Pseudocode on paper/scratchpad.
+	6. Dry Run the pseudocode with examples.
+	7. Write the actual code.
+	8. Look out for Edge Cases/Boundary Conditions.
+
+Practice: For the first 20-25 problems, consciously follow these steps. With consistent practice, they will become an intuitive part of your problem-solving process. This systematic approach is invaluable for both coding exercises and professional interviews.

@@ -1,0 +1,83 @@
+The lecture introduces the filter() function in Python, a higher-order function used to construct an iterator from elements of an iterable for which a given function returns True. It demonstrates its usage with regular functions, lambda functions, and multiple conditions, including applying it to a list of dictionaries.
+
+The filter() Function in Python
+1. Introduction to filter()
+	• Definition: The filter() function constructs an iterator from elements of an iterable for which a function returns True.
+	• Purpose: It is used to filter out items from a list (or any other iterable) based on a specific condition. It allows you to select elements that satisfy a certain criterion.
+	• Lazy Evaluation: Similar to map(), filter() returns a filter object (an iterator), which means it produces results on demand. To view the filtered elements, you typically convert the filter object to a list, tuple, or another collection.
+	• Syntax: filter(function, iterable) 
+		○ function: A function that tests each element in the iterable. It must return a Boolean value (True or False).
+		○ iterable: The sequence (e.g., list, tuple, set) whose elements are to be filtered.
+2. Using filter() with a Regular Function
+	• Example: Filtering Even Numbers 
+Python
+
+# 1. Define a regular function that returns True/False
+def is_even(num):
+    """Checks if a number is even."""
+    return num % 2 == 0 # Returns True if even, False otherwise
+
+# 2. Input iterable
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+
+# 3. Apply filter()
+even_numbers_filter = filter(is_even, numbers)
+
+# 4. Convert to list to see results
+print(list(even_numbers_filter)) # Output: [2, 4, 6, 8, 10, 12]
+
+Explanation: filter() iterates through numbers. For each num, it calls is_even(num). If is_even(num) returns True, num is included in the output.
+3. Using filter() with a Lambda Function
+Lambda functions are a common choice with filter() for concise, inline condition checks.
+	• Example: Filtering Numbers Greater Than 5 
+Python
+
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+# Apply filter with a lambda function
+numbers_greater_than_5 = filter(lambda x: x > 5, numbers)
+print(list(numbers_greater_than_5)) # Output: [6, 7, 8, 9]
+
+Explanation: lambda x: x > 5 is an anonymous function that returns True if x is greater than 5, and False otherwise. filter() uses this to select the desired numbers.
+4. Filtering with Multiple Conditions (using and/or in Lambda)
+You can combine multiple conditions within the lambda expression using logical operators.
+	• Example: Filtering Even Numbers Greater Than 5 
+Python
+
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+even_and_greater_than_5 = filter(lambda x: x > 5 and x % 2 == 0, numbers)
+print(list(even_and_greater_than_5)) # Output: [6, 8]
+
+Explanation: The lambda lambda x: x > 5 and x % 2 == 0 ensures that both conditions (x is greater than 5 AND x is even) must be True for an element to be included.
+5. Applying filter() to a List of Dictionaries
+filter() can be used to select dictionaries (or other complex objects) from a list based on criteria applied to their internal data.
+	• Example: Filtering People Older Than 25 
+Python
+
+people = [
+    {"name": "Krish", "age": 32},
+    {"name": "Jack", "age": 33},
+    {"name": "John", "age": 25},
+    {"name": "Alice", "age": 20}
+]
+
+# Define a function to check the condition for each person (dictionary)
+def is_older_than_25(person_dict):
+    return person_dict['age'] > 25
+
+# Apply filter
+filtered_people = filter(is_older_than_25, people)
+
+# Convert to list to view the dictionaries that satisfy the condition
+print(list(filtered_people))
+# Output: [{'name': 'Krish', 'age': 32}, {'name': 'Jack', 'age': 33}]
+
+Alternatively, using a lambda function: 
+Python
+
+filtered_people_lambda = filter(lambda person: person['age'] > 25, people)
+print(list(filtered_people_lambda))
+Conclusion
+The filter() function is a powerful and efficient tool for creating iterators that selectively include items from an iterable based on a Boolean-returning function. It is commonly used for data cleaning, filtering objects, and removing unwanted elements from collections in a concise and readable manner. By mastering filter(), along with map() and lambda functions, you can write more expressive and efficient code for data processing in Python.
+The lecture reiterates the importance of understanding def functions, anonymous (lambda) functions, map(), and filter() as core concepts in Python programming.

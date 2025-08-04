@@ -1,0 +1,163 @@
+The lecture introduces Sets in Python, covering their definition, creation, basic operations (adding/removing elements, membership tests), mathematical operations (union, intersection, difference, symmetric difference), and key methods like is_subset and is_superset. It also provides a practical example of counting unique words.
+
+Data Structures in Python: Sets
+1. Introduction to Sets
+	• Definition: Sets are built-in data types in Python used to store a collection of unique items.
+	• Key Characteristics: 
+		○ Unordered: Elements in a set do not follow a specific order. Their order may change.
+		○ No Duplicates: Sets automatically handle duplicate entries, storing only one instance of each unique item.
+		○ Mutable (for the set itself): You can add or remove elements from a set.
+		○ Immutable Elements: Items stored within a set must be immutable (e.g., numbers, strings, tuples). Lists and dictionaries cannot be directly elements of a set because they are mutable.
+	• Use Cases: 
+		○ Membership Testing: Efficiently check if an item is present in the collection.
+		○ Eliminating Duplicates: Easily get a collection of unique items from another iterable (like a list).
+		○ Mathematical Set Operations: Perform operations like union, intersection, difference, and symmetric difference.
+		
+2. Creating a Set
+	• Sets are primarily created using curly braces {} or by using the set() constructor.
+	• From curly braces: 
+Python
+
+my_set = {1, 2, 3, 4, 5}
+print(my_set)      # Output: {1, 2, 3, 4, 5} (order may vary)
+print(type(my_set)) # Output: <class 'set'>
+	• Empty Set: To create an empty set, you must use the set() constructor. Using {} creates an empty dictionary. 
+Python
+
+empty_set = set()
+print(empty_set)      # Output: set()
+print(type(empty_set)) # Output: <class 'set'>
+	• From other iterables (e.g., list or tuple): 
+Python
+
+my_list_to_set = [1, 2, 3, 4, 5, 6]
+my_set_from_list = set(my_list_to_set)
+print(my_set_from_list) # Output: {1, 2, 3, 4, 5, 6}
+
+# Handling duplicates during creation
+set_with_duplicates = {1, 2, 3, 4, 5, 6, 5, 4, 6}
+print(set_with_duplicates) # Output: {1, 2, 3, 4, 5, 6} (duplicates are automatically removed)
+	
+3. Basic Set Operations (Adding & Removing Elements)
+	• add(element): Adds a single element to the set. If the element already exists, nothing happens. 
+Python
+
+my_set = {1, 2, 3, 4, 5, 6}
+my_set.add(7)
+print(my_set) # Output: {1, 2, 3, 4, 5, 6, 7} (order may vary)
+my_set.add(6) # Adding an existing element, no change
+print(my_set) # Output: {1, 2, 3, 4, 5, 6, 7}
+	• remove(element): Removes a specified element from the set. Raises a KeyError if the element is not found. 
+Python
+
+my_set.remove(3)
+print(my_set) # Output: {1, 2, 4, 5, 6, 7}
+# my_set.remove(10) # Would raise KeyError
+	• discard(element): Removes a specified element from the set. If the element is not found, it does nothing (no error). 
+Python
+
+my_set.discard(10) # No error, element 10 not in set
+print(my_set)      # Output: {1, 2, 4, 5, 6, 7}
+my_set.discard(1)
+print(my_set)      # Output: {2, 4, 5, 6, 7}
+	• pop(): Removes and returns an arbitrary element from the set. Since sets are unordered, you cannot predict which element will be removed.1 Raises KeyError if the set is empty. 
+Python
+
+removed_element = my_set.pop()
+print(f"Removed: {removed_element}, Remaining set: {my_set}")
+	• clear(): Removes all elements from the set, making it empty. 
+Python
+
+my_set.clear()
+print(my_set) # Output: set()
+	
+4. Set Membership Test
+	• Use the in operator to check if an element is present in a set. This is highly efficient for sets. 
+Python
+
+my_set = {1, 2, 3, 4, 5}
+print(3 in my_set)  # Output: True
+print(10 in my_set) # Output: False
+	
+5. Mathematical Set Operations
+Sets support common mathematical set operations.
+	• Union (union() or |): Returns a new set containing all unique elements from both sets. 
+Python
+
+set1 = {1, 2, 3, 4, 5, 6}
+set2 = {4, 5, 6, 7, 8, 9}
+union_set = set1.union(set2)
+# Or: union_set = set1 | set2
+print(union_set) # Output: {1, 2, 3, 4, 5, 6, 7, 8, 9}
+	• Intersection (intersection() or &): Returns a new set containing only the common elements between both sets. 
+Python
+
+intersection_set = set1.intersection(set2)
+# Or: intersection_set = set1 & set2
+print(intersection_set) # Output: {4, 5, 6}
+	• Difference (difference() or -): Returns a new set containing elements present in the first set but not in the second. 
+Python
+
+difference_set = set1.difference(set2)
+# Or: difference_set = set1 - set2
+print(difference_set) # Output: {1, 2, 3} (elements in set1 but not in set2)
+	• Symmetric Difference (symmetric_difference() or ^): Returns a new set containing elements that are unique to each set (i.e., not in both). It's the union minus the intersection. 
+Python
+
+sym_difference_set = set1.symmetric_difference(set2)
+# Or: sym_difference_set = set1 ^ set2
+print(sym_difference_set) # Output: {1, 2, 3, 7, 8, 9}
+	• Update Methods (_update() suffix): These methods modify the original set in-place. 
+		○ intersection_update(other_set): Updates the set with the intersection.
+		○ difference_update(other_set): Updates the set by removing elements found in other_set.
+		○ union_update(other_set): Updates the set with the union.
+		○ symmetric_difference_update(other_set): Updates the set with the symmetric difference.
+		○ Example: 
+Python
+
+set1 = {1, 2, 3, 4, 5, 6}
+set2 = {4, 5, 6, 7, 8, 9}
+set1.intersection_update(set2)
+print(set1) # Output: {4, 5, 6} (set1 is now modified)
+		
+6. Set Methods (Checking Relationships)
+	• is_subset(other_set): Returns True if all elements of the current set are present in other_set. 
+Python
+
+set_a = {1, 2, 3}
+set_b = {1, 2, 3, 4, 5}
+print(set_a.is_subset(set_b)) # Output: True
+	• is_superset(other_set): Returns True if the current set contains all elements of other_set. 
+Python
+
+print(set_b.is_superset(set_a)) # Output: True
+	• is_disjoint(other_set): Returns True if the set has no elements in common with other_set. 
+Python
+
+set_x = {1, 2}
+set_y = {3, 4}
+print(set_x.is_disjoint(set_y)) # Output: True
+	
+7. Practical Examples
+	• Removing Duplicates from a List: This is a very common use case for sets. 
+Python
+
+my_list_with_duplicates = [1, 2, 2, 3, 4, 4, 5]
+unique_elements = set(my_list_with_duplicates)
+print(unique_elements) # Output: {1, 2, 3, 4, 5}
+# To convert back to list: list(unique_elements)
+	• Counting Unique Words in Text: 
+Python
+
+text = "In this tutorial we are discussing about sets"
+words = text.split() # Splits the string into a list of words
+unique_words = set(words) # Converts the list of words into a set to get unique words
+
+print("Unique words:", unique_words)
+print("Number of unique words:", len(unique_words))
+# Example Output:
+# Unique words: {'about', 'discussing', 'In', 'tutorial', 'sets', 'this', 'are', 'we'}
+# Number of unique words: 8
+
+Conclusion:
+Sets are valuable for tasks requiring uniqueness, membership testing, and mathematical set operations. Their unordered nature and automatic handling of duplicates make them efficient for specific use cases, complementing other data structures like lists and dictionaries.

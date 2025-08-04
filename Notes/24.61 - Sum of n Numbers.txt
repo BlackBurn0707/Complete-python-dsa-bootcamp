@@ -1,0 +1,30 @@
+Of course. Here are the notes from the video.
+
+### **Recursion Problem Statement**
+
+You are tasked with solving the following problem using the recursive principles discussed in previous lessons. The solution will be provided in the next video.
+
+-----
+
+### **The Question ✍️**
+
+Write a program to find the **sum of all natural numbers up to a given number `n`**. You must solve this problem **recursively**.
+
+For example, if `n = 5`, your program should calculate `1 + 2 + 3 + 4 + 5` and return `15`.
+
+-----
+
+### **Tasks**
+
+1.  **State the Recurrence Relation**: Identify the mathematical relationship that defines the problem in terms of a smaller version of itself.
+2.  **Write the Recursive Code**: Implement the solution in Python using the following function signature:
+    ```python
+    def sum_of_numbers(n):
+        # Your recursive code here
+        pass
+
+    # Example calls
+    print(sum_of_numbers(5))
+    print(sum_of_numbers(10))
+    ```
+3.  **Recursion Tree (Optional for now)**: The concept of a "recursion tree" will be introduced and explained in the next video. It's a visualization tool used in interviews to trace recursive calls and analyze complexity. You can attempt it, but it has not been formally taught yet.

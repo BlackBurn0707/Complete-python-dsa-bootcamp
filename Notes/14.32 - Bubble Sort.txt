@@ -1,0 +1,44 @@
+Sorting Algorithms: An Introduction
+This video introduces sorting algorithms, which are fundamental in computer science for arranging elements in a specific order (increasing or decreasing). Sorting has vast real-world applications, from organizing e-commerce search results to managing database records.
+
+What is Sorting?
+	• The process of arranging a collection of elements (e.g., numbers, strings) into a specific order, typically ascending (increasing) or descending (decreasing).
+
+Bubble Sort Algorithm
+ 
+Bubble Sort is a simple sorting algorithm that works by repeatedly stepping through the list, comparing1 adjacent elements, and swapping them if they are in the wrong order. The pass through the list is repeated until2 no swaps are needed, which indicates that the list is sorted.
+Core Idea (Mnemonic: "Creating Bubbles"):
+	• Imagine creating a "bubble" around two adjacent elements.
+	• Compare these two elements.
+	• If their order is incorrect (e.g., for ascending sort, the left element is greater than the right element), swap them.
+	• Repeat this process for all adjacent pairs in a "pass" through the list.
+How it Works - Step-by-Step (Dry Run Example):
+Initial List: [12, 25, 11, 34, 90, 22]
+Pass 1: (Goal: Move the largest element to the end)
+	1. Compare (12, 25): Order is correct. List: [12, 25, 11, 34, 90, 22]
+	2. Compare (25, 11): Order is incorrect (25 > 11). Swap. List: [12, 11, 25, 34, 90, 22]
+	3. Compare (25, 34): Order is correct. List: [12, 11, 25, 34, 90, 22]
+	4. Compare (34, 90): Order is correct. List: [12, 11, 25, 34, 90, 22]
+	5. Compare (90, 22): Order is incorrect (90 > 22). Swap. List: [12, 11, 25, 34, 22, 90]
+	• Result after Pass 1: [12, 11, 25, 34, 22, 90] 
+		○ Observation: The largest element (90) is now at its correct final position at the end of the list.
+Pass 2: (Goal: Move the second largest element to its correct position, just before the already sorted 90)
+	• We now only need to compare elements up to index 4 (excluding the last element, 90, which is already sorted).
+	1. Compare (12, 11): Order is incorrect. Swap. List: [11, 12, 25, 34, 22, 90]
+	2. Compare (12, 25): Order is correct. List: [11, 12, 25, 34, 22, 90]
+	3. Compare (25, 34): Order is correct. List: [11, 12, 25, 34, 22, 90]
+	4. Compare (34, 22): Order is incorrect. Swap. List: [11, 12, 25, 22, 34, 90]
+	• Result after Pass 2: [11, 12, 25, 22, 34, 90] 
+		○ Observation: The second largest element (34) is now at its correct final position.
+Generalization:
+	• After K passes, the K largest elements will be in their correct sorted positions at the end of the list.
+	• The algorithm requires n-1 passes to sort a list of n elements. After n-1 passes, n-1 elements are in place, automatically ensuring the last remaining element is also in its correct spot.
+	• In each subsequent pass, we compare one fewer pair of elements because the elements at the end are already sorted.
+Visualization:
+	• Online tools (like HackerEarth's visualization mentioned in the transcript) vividly demonstrate how elements "bubble up" to their correct positions with each pass and how the sorted portion of the array grows.
+
+Implementing Bubble Sort (Hint for Next Video)
+	• Nested Loops: Bubble sort typically involves two nested loops: 
+		○ Outer Loop (for Passes): Controls the number of passes (n-1 passes). This loop determines how many elements are placed in their final sorted positions.
+		○ Inner Loop (for Comparisons/Swaps in a Pass): Iterates through the unsorted portion of the list, comparing adjacent elements and swapping them if out of order. 
+			§ Optimization: The inner loop's range should decrease with each outer loop iteration because the largest elements are progressively "bubbled" to the end and are already sorted.

@@ -1,0 +1,74 @@
+The speaker continues building the custom list class, aiming to implement more methods that mimic Python's built-in list behavior. The focus of this video is on **indexing**, **clearing**, and **inserting** elements, with a challenge for the viewer to implement **removing** elements.
+
+---
+
+## Implementing Indexing (`__getitem__` Magic Method)
+
+Python lists support indexing (e.g., `my_list[0]`) to access elements at a specific position. Our `CustomList` currently doesn't, resulting in an "object is not subscriptable" error. To enable this, we use the **`__getitem__` magic method**.
+
+### `__getitem__(self, index)` Logic:
+
+1.  **Input:** Takes `self` (the instance of the class) and `index` (the requested position).
+2.  **Boundary Check:** Before returning the element, it's crucial to check if the `index` is within the valid bounds of the list.
+    * A valid index must be **greater than or equal to 0** and **less than `self.size`**.
+    * `if 0 <= index < self.size:` (Note: it's `< self.size` because indexing is 0-based, so the last valid index is `self.size - 1`).
+3.  **Return Element:** If the index is valid, return the element from the internal `self.array` at that `index`.
+    * `return self.array[index]`
+4.  **Handle Invalid Index:** If the index is out of bounds, raise an `IndexError`, mimicking Python's behavior.
+    * `else: raise IndexError("Invalid index")` (The speaker initially uses "index error invalid index" but aims for consistency with Python's "list index out of range").
+
+---
+
+## Implementing `clear()`
+
+The `clear()` method empties the list, removing all its elements.
+
+### `clear(self)` Logic:
+
+1.  **Purpose:** To make the list appear empty without necessarily deallocating all memory.
+2.  **Implementation:** The simplest and most efficient way to "clear" the list is to reset its `size` to `0`.
+    * `self.size = 0`
+3.  **Why this works:** All other methods (like `__str__`, `pop`, `__getitem__`, and future methods) rely on `self.size` to determine the active elements in the list. By setting `self.size` to 0, these methods will treat the list as empty. The actual elements might still exist in the underlying C-type array's memory, but they are no longer accessible or considered part of the list.
+4.  **Optional:** One could also reinitialize `self.array` and `self.capacity` in `clear()`, but simply resetting `self.size` is sufficient and more performant for typical use cases.
+
+---
+
+## Implementing `insert(position, element)`
+
+The `insert()` method adds an `element` at a specific `position` within the list, shifting existing elements to make space.
+
+### `insert(self, position, element)` Logic:
+
+1.  **Capacity Check:** Just like `append`, the first step is to check if there's enough capacity. If `self.size` equals `self.capacity`, call `self._resize(2 * self.capacity)`. This ensures there's always space for the new element.
+2.  **Shifting Elements:** This is the core logic. To insert an element at `position`, all elements from `position` onwards must be shifted one position to the right (towards higher indices).
+    * **Loop Direction:** The loop must run **backwards** from `self.size - 1` down to `position`. This is because we need to move elements from right to left to avoid overwriting elements before they are moved.
+    * `for i in range(self.size, position, -1):`
+        * `self.array[i] = self.array[i - 1]`
+        * **Example Walkthrough:** If `size = 4` and `position = 2` (inserting at index 2), the loop will run for `i = 4` and `i = 3`.
+            * When `i = 4`: `self.array[4] = self.array[3]` (copies element from index 3 to index 4).
+            * When `i = 3`: `self.array[3] = self.array[2]` (copies element from index 2 to index 3).
+        * This effectively makes space at `self.array[position]`.
+3.  **Insert Element:** Once space is made, place the new `element` at the desired `position`.
+    * `self.array[position] = element`
+4.  **Increment Size:** Finally, increment `self.size` as a new element has been added.
+    * `self.size += 1`
+5.  **Position Boundary Check (Optional but Recommended):** While the speaker skips this for simplicity, a production-ready `insert` method should also check if the `position` is valid (e.g., `0 <= position <= self.size`). Python's built-in `insert` handles out-of-bounds positions by inserting at the beginning or end.
+
+---
+
+## Challenge: Implement `remove(value)`
+
+The speaker challenges the viewer to implement the `remove()` method, which finds and removes the **first occurrence** of a specified `value`.
+
+### `remove(self, value)` Hints:
+
+1.  **Find Element:** First, you'll need to iterate through the list to find the `index` of the `first occurrence` of the `value`.
+2.  **Shift Elements:** Once the element at `index` is found, you'll need to shift all subsequent elements to the **left** (towards lower indices) to fill the gap created by the removal. This is the opposite of the `insert` method's shift.
+    * The loop should start from the `index` where the element was found and go up to `self.size - 1`.
+    * `self.array[i] = self.array[i + 1]`
+3.  **Decrement Size:** After shifting, decrement `self.size` by `1` as an element has been removed.
+4.  **Handle Value Not Found:** If the `value` is not found in the list, raise a `ValueError` (e.g., `ValueError("Value not in list")`), mimicking Python's built-in `remove` method.
+
+---
+
+The speaker emphasizes that understanding these internal implementations, even for methods that exist magically in Python, is crucial for interviews and for gaining a deeper understanding of data structures. The goal is to build confidence in creating custom data types from scratch, a skill that will be vital for future data structure implementations in the course.

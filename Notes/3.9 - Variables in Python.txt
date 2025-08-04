@@ -1,0 +1,137 @@
+Variables in Python
+1. Introduction to Variables
+	• Definition: Variables are fundamental programming elements used to store and manipulate data within a program.
+	• Declaration and Assignment: In Python, variables are created the moment you assign a value to them. Explicit declaration (like int x; in other languages) is not required. Python automatically allocates memory and determines the type during assignment. 
+		○ Example: a = 100 (creates a variable a and assigns it the value 100).
+		
+2. Declaring and Assigning Variables
+Variables can store various data types:
+	• Integers (int): Whole numbers. 
+		○ Example: age = 32
+	• Floating-point numbers (float): Numbers with decimal points. 
+		○ Example: height = 6.1
+	• Strings (str): Sequences of characters enclosed in single or double quotes. 
+		○ Example: name = "Krish"
+	• Booleans (bool): Represent truth values, either True or False. 
+		○ Example: is_student = True
+Printing Variables:
+Variables can be printed directly or combined with descriptive text using commas in the print() function.
+Example:
+Python
+
+age = 32
+height = 6.1
+name = "Krish"
+print("Age:", age)
+print("Height:", height)
+print("Name:", name)
+Output:
+Age: 32
+Height: 6.1
+Name: Krish
+
+3. Naming Conventions
+Good variable names are crucial for code readability and maintainability.
+	• Descriptive: Names should clearly indicate the variable's purpose (e.g., first_name instead of fn).
+	• Starting Character: Must start with a letter (a-z, A-Z) or an underscore (_).
+	• Allowed Characters: Can contain letters, numbers (0-9), and underscores.
+	• Case Sensitive: Variable names are case-sensitive (e.g., name and Name are different).
+	• Avoid Keywords: Do not use Python's reserved keywords (e.g., if, for, while, True, False).
+Valid Variable Names:
+	• first_name = "Krish"
+	• _last_name = "Nayak"
+	• user_age = 30
+Invalid Variable Names (and why):
+	• 1age = 30 (Cannot start with a number)
+	• first-name = "Krish" (Cannot use hyphens; they are interpreted as subtraction)
+	• @name = "Krish" (Cannot use special characters like @)
+	
+4. Understanding Variable Types (Dynamic Typing)
+	• Python is Dynamically Typed: This means the type of a variable is determined at runtime, based on the value assigned to it. You don't declare the type beforehand.
+	• Common Data Types (examples): 
+		○ age = 25 (int)
+		○ height = 6.1 (float)
+		○ name = "Chris" (str)
+		○ is_student = True (bool)
+		
+5. Type Checking and Conversion (Type Casting)
+	• Type Checking: Use the type() function to determine the data type of a variable. 
+		○ Example: print(type(age))
+	• Type Conversion (Type Casting): You can convert a variable from one data type to another using built-in functions like int(), float(), str(), bool(). 
+		○ str(): Converts to string. 
+Python
+
+age = 25
+age_str = str(age) # age_str will be "25" (string)
+print(type(age_str)) # Output: <class 'str'>
+		○ int(): Converts to integer. 
+			§ Can convert string representations of integers (e.g., "25") to integers.
+			§ Cannot convert non-numeric strings (e.g., "Krish") to integers.
+			§ Converts floats to integers by truncating the decimal part (e.g., int(5.11) becomes 5).
+		○ float(): Converts to float. 
+			§ Can convert integers (e.g., float(5) becomes 5.0).
+Example of Type Conversion:
+Python
+
+# String to Integer
+num_str = "25"
+num_int = int(num_str)
+print(type(num_int)) # Output: <class 'int'>
+# Invalid String to Integer (will raise ValueError)
+# name_str = "Krish"
+# name_int = int(name_str) # Error: invalid literal for int()
+# Float to Integer
+height_float = 5.11
+height_int = int(height_float) # height_int becomes 5
+print(height_int) # Output: 5
+print(type(height_int)) # Output: <class 'int'>
+# Integer to Float
+num_again_float = float(height_int) # num_again_float becomes 5.0
+print(num_again_float) # Output: 5.0
+print(type(num_again_float)) # Output: <class 'float'>
+
+6. Dynamic Typing Illustrated
+	• Python's dynamic typing allows a variable's type to change during program execution by reassigning a value of a different type. 
+		○ Example: 
+Python
+
+var = 10         # var is int
+print(var, type(var)) # Output: 10 <class 'int'>
+
+var = "Hello"    # var is now str
+print(var, type(var)) # Output: Hello <class 'str'>
+
+var = 3.14       # var is now float
+print(var, type(var)) # Output: 3.14 <class 'float'>
+		
+7. User Input with input() function
+	• The input() function is used to get user input from the console.
+	• Crucially: The input() function always returns a string. If you need to treat the input as a number, you must explicitly convert it using int() or float().
+Example:
+Python
+
+# User enters age as a string
+age_str_input = input("What is your age? ")
+print(age_str_input, type(age_str_input)) # Output: (e.g., 23) <class 'str'>
+# Converting user input to integer
+age_int_input = int(input("What is your age? "))
+print(age_int_input, type(age_int_input)) # Output: (e.g., 23) <class 'int'>
+
+8. Practical Example: Simple Calculator
+This example demonstrates using input() for numerical input and type casting to perform arithmetic operations.
+Python
+
+# Get user input for two numbers and convert them to integers
+num1 = int(input("Enter first number: "))
+num2 = int(input("Enter second number: "))
+# Perform arithmetic operations
+sum_result = num1 + num2
+difference_result = num1 - num2
+product_result = num1 * num2
+# Division (note: / operator results in float by default)
+quotient_result = num1 / num2
+# Print the results
+print("Sum:", sum_result)
+print("Difference:", difference_result)
+print("Product:", product_result)
+print("Quotient:", quotient_result)

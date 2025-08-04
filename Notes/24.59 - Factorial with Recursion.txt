@@ -1,0 +1,115 @@
+Of course. Here are the notes from the video lecture on understanding recursion through the factorial example.
+
+### **Topic: Understanding Recursion with Factorial**
+
+This lesson uses the classic problem of calculating the factorial of a number to provide a deep, visual understanding of how recursion works.
+
+-----
+
+### **1. The Mathematical Foundation of Factorial**
+
+The factorial of a non-negative integer $n$, denoted by $n\!$, is the product of all positive integers less than or equal to $n$.
+
+**Formula:**
+$n\! = n \\times (n-1) \\times (n-2) \\times \\dots \\times 1$
+
+**The Recursive Insight (Recurrence Relation)**
+The key to solving this recursively is to notice that the solution to the problem depends on the solution to a smaller version of the *same problem*.
+
+$n\! = n \\times \\underbrace{((n-1) \\times (n-2) \\times \\dots \\times 1)}\_{(n-1)\!}$
+
+This gives us the **recurrence relation**:
+$$factorial(n) = n \times factorial(n-1)$$
+
+-----
+
+### **2. Implementing Factorial Recursively**
+
+#### **The Initial (Flawed) Attempt**
+
+Based directly on the recurrence relation, a simple recursive function can be written.
+
+```python
+def factorial(n):
+    # This function is missing a base case
+    return n * factorial(n - 1)
+
+# print(factorial(5)) # This will cause an error
+```
+
+This code fails with a **`RecursionError: maximum recursion depth exceeded`**. This happens because the function never stops calling itself, leading to an infinite chain of calls (`5 \rightarrow 4 \rightarrow \dots \rightarrow 0 \rightarrow -1 \rightarrow \dots`).
+
+#### **Sidebar: Python's Recursion Limit**
+
+  * To prevent a program crash from a "stack overflow," Python has a built-in recursion limit (usually 1000).
+  * You can check and change this limit using the `sys` module:
+    ```python
+    import sys
+    # Check the current limit
+    print(sys.getrecursionlimit()) # Output: 1000
+    # Set a new limit
+    # sys.setrecursionlimit(2000)
+    ```
+
+#### **The Solution: Adding a Base Case**
+
+A recursive function must have a **base case**—a condition where it stops calling itself and returns a known value. For factorial, the base case is when $n=1$, since $1\! = 1$.
+
+**Corrected Code:**
+
+```python
+def factorial(n):
+    # Base Case: The condition to stop the recursion
+    if n == 1:
+        return 1
+    
+    # Recursive Step: The function calls itself with a smaller problem
+    small_answer = factorial(n - 1)
+    answer = n * small_answer
+    return answer
+
+print(factorial(5))
+```
+
+**Output:**
+
+```
+120
+```
+
+-----
+
+### **3. Visualizing the Recursive Process: The Call Stack**
+
+Here is what happens behind the scenes when `factorial(5)` is called:
+
+#### **Phase 1: The Recursive Calls (Building the Stack)**
+
+Each function call waits for the result of the next call.
+
+1.  `factorial(5)` is called. It needs the result of `factorial(4)`. It waits.
+2.  `factorial(4)` is called. It needs the result of `factorial(3)`. It waits.
+3.  `factorial(3)` is called. It needs the result of `factorial(2)`. It waits.
+4.  `factorial(2)` is called. It needs the result of `factorial(1)`. It waits.
+
+#### **Phase 2: The Base Case is Hit**
+
+5.  `factorial(1)` is called. The `if n == 1:` condition is `True`. The function **returns `1`** without making any more calls.
+
+#### **Phase 3: The Return Journey (Unwinding the Stack)**
+
+The results are now passed back up the chain of waiting functions.
+6\.  `factorial(2)` receives the return value `1`. It calculates `answer = 2 * 1` and **returns `2`**.
+7\.  `factorial(3)` receives the return value `2`. It calculates `answer = 3 * 2` and **returns `6`**.
+8\.  `factorial(4)` receives the return value `6`. It calculates `answer = 4 * 6` and **returns `24`**.
+9\.  `factorial(5)` receives the return value `24`. It calculates `answer = 5 * 24` and **returns `120`**.
+
+This final value of `120` is returned to the original caller.
+
+-----
+
+### **4. The "Leap of Faith" - Moving Beyond Manual Tracing**
+
+Manually tracing the entire call stack like this is great for understanding but is not practical for every problem. We don't need to do it every time.
+
+The reason we can trust recursion to work is because of a mathematical concept called the **Principle of Mathematical Induction (PMI)**. This principle provides the formal proof for why we can assume our recursive calls will work correctly, as long as we have a valid base case and a correct recursive step. This will be explored in the next lesson.

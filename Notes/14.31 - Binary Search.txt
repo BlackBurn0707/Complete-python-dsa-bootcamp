@@ -1,0 +1,108 @@
+Binary Search Algorithm
+This video delves into the binary search algorithm, a more efficient method for finding a target element compared to linear search.
+
+Prerequisite: Sorted Array/List
+	• Crucial Condition: Binary search can only be applied to an array or list that is sorted. 
+		○ Sorted means the elements are either in strictly increasing or strictly decreasing order.
+		○ If the array is unsorted, binary search cannot be used; linear search or another sorting algorithm followed by binary search would be necessary.
+
+How Binary Search Works (The Core Logic)
+The algorithm repeatedly divides the search interval in half.
+	1. Initial Search Space:
+		○ Define start (or low) as the first index (0).
+		○ Define end (or high) as the last index (n-1, where n is the length of the array).
+		○ This initial [start, end] range covers the entire array.
+	2. Find the Middle Element:
+		○ Calculate mid index using the formula: mid = (start + end) // 2. 
+			§ // (floor division) is essential to ensure mid is always an integer index, as array indices cannot be decimals.
+	3. Compare Middle Element with Target:
+		○ Case 1: array[mid] == target 
+			§ If the element at mid is equal to the target, the element is found.
+			§ Return mid (the index of the target).
+		○ Case 2: array[mid] > target 
+			§ If the element at mid is greater than the target: 
+				□ Since the array is sorted, all elements to the right of mid (including mid itself) will also be greater than the target.
+				□ Therefore, the target can only be in the left half of the current search space.
+				□ Update end = mid - 1 to narrow the search to the left segment.
+		○ Case 3: array[mid] < target 
+			§ If the element at mid is less than the target: 
+				□ Since the array is sorted, all elements to the left of mid (including mid itself) will also be less than the target.
+				□ Therefore, the target can only be in the right half of the current search space.
+				□ Update start = mid + 1 to narrow the search to the right segment.
+	4. Repeat or Terminate:
+		○ Steps 2 and 3 are repeated within a while loop as long as start <= end.
+		○ If start becomes greater than end, it means the search space has shrunk to nothing, and the target element is not in the array.
+		○ In this case, the loop terminates, and the function returns -1.
+
+Dry Run Example: Finding 50 in [10, 23, 35, 45, 50, 70, 85]
+	• Array: [10, 23, 35, 45, 50, 70, 85] (Indices: 0, 1, 2, 3, 4, 5, 6)
+	• Target: 50
+Iteration 1:
+	• start = 0, end = 6
+	• mid = (0 + 6) // 2 = 3
+	• array[mid] (i.e., array[3]) is 45.
+	• 45 < 50 (Case 3: array[mid] < target)
+	• Update start = mid + 1 = 3 + 1 = 4
+	• New search space: [50, 70, 85] (Indices: 4, 5, 6)
+Iteration 2:
+	• start = 4, end = 6
+	• mid = (4 + 6) // 2 = 5
+	• array[mid] (i.e., array[5]) is 70.
+	• 70 > 50 (Case 2: array[mid] > target)
+	• Update end = mid - 1 = 5 - 1 = 4
+	• New search space: [50] (Index: 4)
+Iteration 3:
+	• start = 4, end = 4
+	• mid = (4 + 4) // 2 = 4
+	• array[mid] (i.e., array[4]) is 50.
+	• 50 == 50 (Case 1: array[mid] == target)
+	• Return mid (which is 4)
+
+Python Implementation of Binary Search
+Python
+
+def binary_search(arr, target):
+    """
+    Performs a binary search on a sorted list/array to find the target element.
+Args:
+        arr (list): The sorted list or array to search within.
+        target: The element to search for.
+Returns:
+        int: The index of the target if found, otherwise -1.
+    """
+    start = 0
+    # Corrected: end should be len(arr) - 1, not len(arr) - 1 - 1
+    end = len(arr) - 1
+# Continue searching as long as the search space is valid
+    while start <= end:
+        mid = (start + end) // 2  # Calculate the middle index
+if arr[mid] == target:
+            return mid  # Target found, return its index
+        elif arr[mid] > target:
+            # Target is in the left half, so narrow the search space to the left
+            end = mid - 1
+        else:  # arr[mid] < target
+            # Target is in the right half, so narrow the search space to the right
+            start = mid + 1
+# If the loop finishes, the target was not found in the array
+    return -1
+# Example Usage:
+sorted_list = [10, 23, 35, 45, 50, 70, 85]
+# Test cases
+print(f"Target 50 found at index: {binary_search(sorted_list, 50)}")   # Expected: 4
+print(f"Target 10 found at index: {binary_search(sorted_list, 10)}")   # Expected: 0
+print(f"Target 85 found at index: {binary_search(sorted_list, 85)}")   # Expected: 6
+print(f"Target 30 found at index: {binary_search(sorted_list, 30)}")   # Expected: -1 (not found)
+Comparison with Linear Search & Efficiency
+	• Binary search is significantly faster than linear search for large datasets, especially because it discards half of the remaining search space in each step.
+	• The primary trade-off is the requirement for the array to be sorted. If the array is unsorted, the cost of sorting it first might outweigh the benefits of binary search for a single lookup.
+
+Visualization and Intuition
+	• Student Assembly Analogy: Imagine searching for a specific student in a sorted line (by height, for instance). You'd go to the middle. If your student is shorter, you know they can only be in the first half of the line. You eliminate the second half. This process repeats.
+	• Search Space Reduction: The key idea is that the search space (the [start, end] range) gets progressively smaller, allowing for quick convergence to the target or determination of its absence.
+	• Python Tutor: Using tools like Python Tutor for visualization helps in understanding how variables (start, end, mid) change and how the code flow progresses step-by-step.
+
+Practice
+	• Dry Run: Practice tracing the algorithm on paper with different examples (e.g., finding the first element, last element, or an element not present).
+	• Code it Yourself: Implement the algorithm in your coding environment.
+	• Test Boundary Conditions: Always test with elements at the beginning, end, and values not present in the list to ensure robustness.

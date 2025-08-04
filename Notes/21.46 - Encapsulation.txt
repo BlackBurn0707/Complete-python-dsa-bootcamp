@@ -1,0 +1,169 @@
+## Python Encapsulation: Bundling Data and Behavior
+
+Encapsulation is a fundamental concept in Object-Oriented Programming (OOP) that involves **bundling data (attributes/variables) and the methods (functions) that operate on that data into a single unit (a class)**. It also involves restricting direct access to some of an object's components, which helps prevent accidental interference and misuse of data.
+
+Think of it like a capsule: everything related to a specific functionality is kept together, and some internal parts are hidden from direct external manipulation.
+
+-----
+
+### **1. Access Modifiers (Convention in Python)**
+
+Unlike some other languages (like Java or C++), Python does not have strict, built-in access modifiers (public, protected, private) that truly prevent access at the language level. Instead, Python relies on **conventions** and **name mangling** to suggest how attributes should be accessed.
+
+  * **Public Variables:**
+
+      * **Convention:** No special prefix.
+      * **Access:** Can be accessed directly from outside the class.
+      * **Purpose:** Attributes that are intended to be freely accessed and modified.
+
+    <!-- end list -->
+
+    ```python
+    class Person:
+        def __init__(self, name, age):
+            self.name = name  # Public attribute
+            self.age = age    # Public attribute
+
+    person_obj = Person("Krish", 34)
+    print(person_obj.name) # Direct access: Krish
+    person_obj.age = 35    # Direct modification
+    print(person_obj.age)  # Output: 35
+    ```
+
+    *Observation: `dir(person_obj)` will show `name` and `age` directly.*
+
+  * **Protected Variables:**
+
+      * **Convention:** Single leading underscore (`_`).
+      * **Access:** Can be accessed from inside the class and by subclasses (derived classes), but generally **not intended for direct external access**.
+      * **Purpose:** To indicate to other developers that this attribute is primarily for internal use within the class or its subclasses, and should be treated with care if accessed from outside. Python does *not* prevent direct access, it's just a strong hint.
+
+    <!-- end list -->
+
+    ```python
+    class Person:
+        def __init__(self, name, age):
+            self._name = name # Protected attribute (by convention)
+            self._age = age   # Protected attribute (by convention)
+
+    class Employee(Person): # Employee is a derived class
+        def __init__(self, name, age, employee_id):
+            super().__init__(name, age)
+            self.employee_id = employee_id
+
+        def display_protected_name(self):
+            # Accessing protected attribute from a derived class
+            print(f"Employee name (protected): {self._name}")
+
+    emp = Employee("Alice", 30, "E123")
+    emp.display_protected_name() # Output: Employee name (protected): Alice
+
+    # Direct access from outside is technically possible but discouraged:
+    print(emp._name) # Output: Alice
+    ```
+
+  * **Private Variables:**
+
+      * **Convention/Mechanism:** Double leading underscore (`__`).
+      * **Access:** Python performs **name mangling** for these attributes. This means the attribute name is internally changed (e.g., `__name` becomes `_ClassName__name`). This makes it *harder* to access directly from outside the class, but not impossible (if you know the mangled name).
+      * **Purpose:** To strongly suggest that these attributes are strictly internal to the class and should not be accessed or modified from outside, including derived classes. They are part of the class's internal implementation details.
+
+    <!-- end list -->
+
+    ```python
+    class Person:
+        def __init__(self, name, age):
+            self.__name = name # Private attribute (name mangled to _Person__name)
+            self.__age = age   # Private attribute (name mangled to _Person__age)
+
+        def get_internal_name(self):
+            return self.__name # Can be accessed from INSIDE the class
+
+    person_obj = Person("Bob", 25)
+
+    # Attempting direct access from outside will fail:
+    # print(person_obj.__name) # AttributeError: 'Person' object has no attribute '__name'
+
+    # Accessing through a public method (encapsulation in action):
+    print(person_obj.get_internal_name()) # Output: Bob
+
+    # If you inspect dir(person_obj), you'll see the mangled name:
+    # print(dir(person_obj)) # Will show '_Person__name'
+    # print(person_obj._Person__name) # This works, but is against encapsulation principles.
+    ```
+
+    *Summary:* Private variables cannot be directly accessed from outside the class or from derived classes. Their primary purpose is to be managed *only* through methods within the class itself.
+
+-----
+
+### **2. Encapsulation with Getter and Setter Methods**
+
+To allow controlled access to private or protected attributes from outside the class, we use **getter** and **setter** methods. This approach is a cornerstone of encapsulation:
+
+  * **Getter Method:** A method used to *retrieve* the value of an attribute. (Conventionally prefixed with `get_` or simply the attribute name).
+  * **Setter Method:** A method used to *modify* the value of an attribute. (Conventionally prefixed with `set_` or simply the attribute name). Setters often include validation logic to ensure data integrity.
+
+**Example: `Person` Class with Private Variables and Getter/Setter**
+
+```python
+class Person:
+    def __init__(self, name, age):
+        self.__name = name  # Private attribute for name
+        self.__age = age    # Private attribute for age
+
+    # --- Getter method for name ---
+    def get_name(self):
+        """Returns the private name attribute."""
+        return self.__name
+
+    # --- Setter method for name ---
+    def set_name(self, new_name):
+        """Sets a new value for the private name attribute."""
+        if isinstance(new_name, str) and len(new_name.strip()) > 0:
+            self.__name = new_name
+            print(f"Name updated to: {self.__name}")
+        else:
+            print("Invalid name. Name must be a non-empty string.")
+
+    # --- Getter method for age ---
+    def get_age(self):
+        """Returns the private age attribute."""
+        return self.__age
+
+    # --- Setter method for age with validation ---
+    def set_age(self, new_age):
+        """
+        Sets a new value for the private age attribute, with validation.
+        Age must be a positive integer.
+        """
+        if isinstance(new_age, int) and new_age > 0:
+            self.__age = new_age
+            print(f"Age updated to: {self.__age}")
+        else:
+            print("Invalid age. Age must be a positive integer.")
+
+# --- Demonstration ---
+person = Person("Krish", 34)
+
+# Accessing private variables using getter methods
+print(f"Initial Name: {person.get_name()}") # Output: Initial Name: Krish
+print(f"Initial Age: {person.get_age()}")   # Output: Initial Age: 34
+
+# Modifying private variables using setter methods
+person.set_age(35) # Output: Age updated to: 35
+print(f"New Age: {person.get_age()}") # Output: New Age: 35
+
+person.set_age(-5) # Output: Invalid age. Age must be a positive integer.
+person.set_name("") # Output: Invalid name. Name must be a non-empty string.
+```
+
+-----
+
+### **Why Encapsulation is Important:**
+
+1.  **Data Hiding (Information Hiding):** It restricts direct access to an object's internal state. This is crucial because directly modifying internal data can lead to an inconsistent or invalid state for the object.
+2.  **Data Integrity and Validation:** Setter methods allow you to implement validation logic (e.g., age cannot be negative, name cannot be empty) before updating an attribute's value, ensuring that the object always maintains a valid state.
+3.  **Flexibility and Maintainability:** If the internal representation of data changes, only the getter/setter methods need to be updated, not every piece of code that uses the object. This makes the code more robust and easier to maintain.
+4.  **Control:** You have precise control over how attributes can be accessed and modified. For example, you might have a getter but no setter for a read-only attribute.
+
+Encapsulation, especially when combined with getter/setter methods, helps in creating well-designed, robust, and maintainable object-oriented programs by clearly defining the interface for interacting with an object's data.

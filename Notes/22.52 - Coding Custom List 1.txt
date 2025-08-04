@@ -1,0 +1,119 @@
+The speaker begins by outlining the objective: to create a `CustomList` class in Python that mimics the behavior of Python's built-in list, implementing operations like `append`, `pop`, `len`, and `str`. The internal implementation will use a C-type array for storing references, similar to how Python lists work.
+
+---
+
+## `CustomList` Class Structure and Initialization
+
+The core of the implementation is a Python class named `CustomList`.
+
+### `__init__` (Constructor)
+
+The constructor initializes the fundamental attributes of our custom list:
+
+* **`capacity`**: This defines the maximum number of elements the list can currently hold. It's initialized to `1` (or some small initial size) to mimic Python's dynamic array behavior, where the capacity grows as needed.
+    * *Analogy:* If you can eat 3 burgers (capacity), but have only eaten 1 (size).
+* **`size`**: This tracks the actual number of elements currently stored in the list. It's initialized to `0`.
+* **`array`**: This will be the underlying data structure that stores the elements (references, to be precise). Crucially, it **cannot** be a standard Python list, as the goal is to implement a list from scratch.
+
+---
+
+## Internal Array Creation using `ctypes`
+
+To avoid using Python's built-in list for the underlying storage, the `ctypes` library is employed. `ctypes` allows creation of data types compatible with C, which is suitable for creating a low-level array of references.
+
+### `_create_array(capacity)` (Private Helper Method)
+
+This method is responsible for creating the internal array.
+
+* It uses `ctypes.py_object * capacity`.
+    * `ctypes.py_object` specifies that the array will store Python object references.
+    * `* capacity` creates an array of that many Python object references.
+* This function returns a C-type referential array, capable of storing references to Python objects.
+* The `__init__` method calls `self._create_array(self.capacity)` to initialize `self.array`.
+
+---
+
+## Implementing `append(item)`
+
+The `append` method adds an `item` to the end of the list.
+
+### Logic:
+
+1.  **Check for Capacity:** Before appending, it checks if `self.size` (current number of elements) is equal to `self.capacity` (maximum storage).
+    * `if self.size == self.capacity:`
+2.  **Resize if Capacity is Full:** If the capacity is full, the list needs to be resized. This is handled by a private `_resize` method.
+    * `self._resize(2 * self.capacity)`: The common strategy is to double the capacity.
+3.  **Add Item:** Once there's space, the `item` is added at the current `self.size` index.
+    * `self.array[self.size] = item`
+4.  **Increment Size:** After adding the item, `self.size` is incremented.
+    * `self.size += 1`
+
+---
+
+### `_resize(new_capacity)` (Private Helper Method)
+
+This method handles resizing the internal array.
+
+### Logic:
+
+1.  **Create New Array:** A new array with the `new_capacity` is created using `self._create_array(new_capacity)`.
+2.  **Copy Elements:** All existing elements from the old array are copied to the `new_array`.
+    * `for i in range(self.size):`
+    * `new_array[i] = self.array[i]`
+    * This loop iterates only up to `self.size` because we only care about the elements currently stored, not the entire capacity of the old array.
+3.  **Update References:**
+    * `self.array = new_array`: The `self.array` pointer is updated to point to the newly created and populated array.
+    * `self.capacity = new_capacity`: The `self.capacity` is updated to reflect the new maximum storage.
+
+---
+
+## Implementing `len(object)` using `__len__` Magic Method
+
+The built-in `len()` function for an object calls its special `__len__` method.
+
+### `__len__(self)` Magic Method:
+
+* **Purpose:** To return the number of elements in the list.
+* **Implementation:** It simply returns `self.size`.
+    * `return self.size`
+* **Demonstration:** The speaker shows that `len(my_list)` internally calls `my_list.__len__()`. An initial test returning `0` (or `-1` temporarily) confirms this.
+
+---
+
+## Implementing `print(object)` using `__str__` Magic Method
+
+The built-in `print()` function for an object calls its special `__str__` method to get its string representation.
+
+### `__str__(self)` Magic Method:
+
+* **Purpose:** To return a string representation of the list, similar to `[item1, item2, item3]`.
+* **Implementation:**
+    1.  Initialize an empty string `output`.
+    2.  Iterate through the elements of `self.array` from index `0` up to `self.size - 1`.
+        * `for i in range(self.size):`
+        * Append the string representation of each element and a comma `", "` to `output`.
+        * `output += str(self.array[i]) + ", "`
+    3.  **Handle Empty List:** If `self.size` is 0, `output` remains "[]".
+    4.  **Remove Trailing Comma:** If the list is not empty, slice the `output` string to remove the last two characters (the trailing comma and space): `output = output[:-2]`.
+    5.  **Add Brackets:** Enclose the `output` in square brackets: `return "[" + output + "]"`
+
+---
+
+## Implementing `pop()`
+
+The `pop()` method removes and returns the last element from the list.
+
+### Logic:
+
+1.  **Handle Empty List:**
+    * `if self.size == 0:`
+    * Raise an `IndexError` (mimicking Python's built-in list behavior): `raise IndexError("pop from empty list")`
+2.  **Get Last Item:** Retrieve the last element using `self.array[self.size - 1]`.
+    * `popped_item = self.array[self.size - 1]`
+3.  **Decrement Size:** Decrease `self.size` by `1`. This effectively "removes" the last element from the list's active range, as subsequent operations (like `append` or `__str__`) will only consider elements up to `self.size - 1`. The actual element might still be in memory at the old index, but it's no longer accessible via the list's operations.
+    * `self.size -= 1`
+4.  **Return Popped Item:** Return the `popped_item`.
+
+---
+
+The speaker demonstrates the `append`, `len`, `__str__`, and `pop` functionalities with examples and tests in VS Code, confirming their correct behavior. The next video will cover `clear`, `find`, `insert`, and `delete` methods. The speaker emphasizes the importance of understanding these foundational concepts for building more complex data structures.

@@ -1,0 +1,203 @@
+## Python Inheritance: Building on Existing Code
+
+Inheritance is a fundamental concept in Object-Oriented Programming (OOP) that allows a new class (the **child class** or **derived class**) to inherit attributes and methods from an existing class (the **parent class** or **base class**). This promotes code reusability, reduces redundancy, and establishes a natural "is-a" relationship between classes (e.g., a "Tesla is a Car").
+
+-----
+
+### **1. Core Concepts**
+
+  * **Parent Class (Base Class):** The class from which attributes and methods are inherited.
+  * **Child Class (Derived Class):** The new class that inherits from the parent class. It can extend or override the inherited functionalities.
+
+-----
+
+### **2. Single Inheritance**
+
+Single inheritance occurs when a class inherits from only **one** base class.
+
+#### **Defining the Parent Class (Base Class)**
+
+First, we define the base class with its attributes (initialized in the constructor `__init__`) and methods.
+
+**Example: `Car` Class**
+
+```python
+class Car:
+    """
+    A base class representing a generic car with basic attributes and behaviors.
+    """
+    def __init__(self, windows, doors, engine_type):
+        """
+        Constructor for the Car class.
+        Args:
+            windows (int): Number of car windows.
+            doors (int): Number of car doors.
+            engine_type (str): Type of engine (e.g., "petrol", "diesel").
+        """
+        self.windows = windows
+        self.doors = doors
+        self.engine_type = engine_type
+        print(f"Car initialized: {self.engine_type} engine with {self.windows} windows and {self.doors} doors.")
+
+    def drive(self):
+        """
+        A method to simulate driving the car.
+        """
+        print(f"The person will drive the {self.engine_type} car.")
+
+# Example usage of the Car class (without inheritance yet)
+# my_car = Car(4, 5, "petrol")
+# my_car.drive()
+# Output:
+# Car initialized: petrol engine with 4 windows and 5 doors.
+# The person will drive the petrol car.
+```
+
+#### **Defining the Child Class (Derived Class)**
+
+To make a class inherit from another, you specify the parent class name in parentheses after the child class name.
+
+  * **Syntax:** `class ChildClass(ParentClass):`
+
+  * **The `__init__` method in Child Class:**
+
+      * The child class's `__init__` method often needs to call the parent class's `__init__` method to ensure that inherited attributes are properly initialized.
+      * This is typically done using `super().__init__(...)`. `super()` is a special function that returns a proxy object that allows you to call methods of the parent class.
+
+**Example: `Tesla` Class Inheriting from `Car`**
+
+```python
+class Tesla(Car): # Tesla inherits from Car
+    """
+    A child class representing a Tesla car, inheriting from Car and adding specific features.
+    """
+    def __init__(self, windows, doors, engine_type, is_self_driving):
+        """
+        Constructor for the Tesla class.
+        Calls the parent Car class's constructor to initialize common attributes.
+
+        Args:
+            windows (int): Number of car windows.
+            doors (int): Number of car doors.
+            engine_type (str): Type of engine (e.g., "electric").
+            is_self_driving (bool): Whether the Tesla supports self-driving.
+        """
+        # Call the parent class (Car) constructor to initialize inherited attributes
+        super().__init__(windows, doors, engine_type)
+
+        # Initialize attributes specific to the Tesla class
+        self.is_self_driving = is_self_driving
+        print(f"Tesla initialized: Self-driving capability - {self.is_self_driving}.")
+
+    def self_driving(self):
+        """
+        A method specific to Tesla to demonstrate its self-driving capability.
+        """
+        print(f"Tesla supports self-driving: {self.is_self_driving}.")
+
+# Creating a Tesla object
+tesla_model_s = Tesla(4, 5, "electric", True)
+
+# Accessing methods from both Parent and Child classes
+tesla_model_s.drive()       # Inherited from Car
+tesla_model_s.self_driving() # Specific to Tesla
+
+# Output:
+# Car initialized: electric engine with 4 windows and 5 doors.
+# Tesla initialized: Self-driving capability - True.
+# The person will drive the electric car.
+# Tesla supports self-driving: True.
+```
+
+-----
+
+### **3. Multiple Inheritance**
+
+Multiple inheritance occurs when a class inherits from **more than one** base class. The child class gains attributes and methods from all its parent classes.
+
+  * **Syntax:** `class ChildClass(ParentClass1, ParentClass2, ...):`
+
+  * **Handling `__init__` in Multiple Inheritance:**
+    When using multiple inheritance, you need to ensure that all parent constructors are called to initialize their respective attributes. The transcript shows explicit calls to each parent's `__init__` method using `ParentClass.__init__(self, ...)`.
+
+    *Note: While `super().__init__()` can also be used in multiple inheritance, it follows a specific Method Resolution Order (MRO) which can be complex. Explicitly calling each parent's `__init__` as shown below provides direct control over which attributes are initialized by which parent.*
+
+**Example: `Dog` Class Inheriting from `Animal` and `Pet`**
+
+#### **Base Class 1: `Animal`**
+
+```python
+class Animal:
+    """
+    Base class representing an animal.
+    """
+    def __init__(self, name):
+        self.name = name
+        print(f"Animal '{self.name}' initialized.")
+
+    def speak(self):
+        """
+        Placeholder method to be implemented by subclasses.
+        """
+        print("Subclasses must implement this method.")
+
+```
+
+#### **Base Class 2: `Pet`**
+
+```python
+class Pet:
+    """
+    Base class representing a pet.
+    """
+    def __init__(self, owner):
+        self.owner = owner
+        print(f"Pet owned by '{self.owner}' initialized.")
+
+```
+
+#### **Derived Class: `Dog` (Multiple Inheritance)**
+
+```python
+class Dog(Animal, Pet): # Dog inherits from both Animal and Pet
+    """
+    A class representing a dog, inheriting properties from both Animal and Pet.
+    """
+    def __init__(self, name, owner):
+        # Call constructors of both parent classes explicitly
+        Animal.__init__(self, name)   # Initialize Animal's attributes (name)
+        Pet.__init__(self, owner)     # Initialize Pet's attributes (owner)
+        print(f"Dog '{self.name}' (owner: {self.owner}) fully initialized.")
+
+    def speak(self):
+        """
+        Overrides the speak method from Animal to make a dog-specific sound.
+        """
+        return f"{self.name} says woof!"
+
+# Creating a Dog object
+my_dog = Dog("Buddy", "Krish")
+
+# Accessing attributes from different parent classes
+print(f"Dog's owner: {my_dog.owner}") # Inherited from Pet
+
+# Calling methods
+print(my_dog.speak()) # Overridden method in Dog class
+
+# Output:
+# Animal 'Buddy' initialized.
+# Pet owned by 'Krish' initialized.
+# Dog 'Buddy' (owner: Krish) fully initialized.
+# Dog's owner: Krish
+# Buddy says woof!
+```
+
+-----
+
+### **Key Concepts in Inheritance:**
+
+  * **Method Overriding:** When a child class defines a method with the same name as a method in its parent class, the child's method **overrides** the parent's. When you call that method on an object of the child class, the child's version is executed. (e.g., `Dog`'s `speak` method overrides `Animal`'s `speak`).
+  * **Code Reusability:** Avoids rewriting common logic and attributes.
+  * **"Is-A" Relationship:** Models hierarchical relationships where a child class "is a" type of the parent class (e.g., "A Tesla IS A Car," "A Dog IS AN Animal" and "A Dog IS A Pet").
+
+Inheritance is a powerful tool for structuring complex applications, making them more organized, maintainable, and extensible.

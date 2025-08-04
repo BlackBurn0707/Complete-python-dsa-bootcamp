@@ -1,0 +1,156 @@
+The lecture continues the Python series by focusing on loops, including for and while loops, loop control statements (break, continue, pass), and nested loops. It provides practical examples and discusses common errors.
+
+Loops in Python
+Loops are fundamental control flow structures that allow you to repeatedly execute a block of code.
+1. The for Loop
+	• A for loop is used to iterate over a sequence of items (like a list, tuple, string, or range). It executes its block of code once for each item in the sequence.
+	• Syntax:
+Python
+
+for item in sequence:
+    # code to execute for each item
+	• range() Function:
+The range() function is commonly used with for loops to generate a sequence of numbers.
+		○ range(stop): Generates numbers from 0 up to (but not including) stop. 
+			§ Example: for i in range(5): print(i) will print 0, 1, 2, 3, 4.
+		○ range(start, stop): Generates numbers from start up to (but not including) stop. 
+			§ Example: for i in range(1, 6): print(i) will print 1, 2, 3, 4, 5.
+		○ range(start, stop, step): Generates numbers from start up to (but not including) stop, incrementing by step each time. 
+			§ Example (positive step): for i in range(1, 10, 2): print(i) will print 1, 3, 5, 7, 9.
+			§ Example (negative step): for i in range(10, 0, -1): print(i) will print 10, 9, 8, 7, 6, 5, 4, 3, 2, 1.
+	• Iterating Over Strings:
+for loops can easily iterate through each character in a string.
+		○ Example: 
+Python
+
+my_string = "Krish Nayak"
+for char in my_string:
+    print(char)
+
+Output: Each character, including spaces, on a new line.
+
+2. The while Loop
+	• A while loop continuously executes a block of code as long as its condition remains True. The loop terminates when the condition becomes False.
+	• Syntax: 
+Python
+
+while condition:
+    # code to execute as long as condition is True
+	• Key Point: You must ensure that the condition eventually becomes False to avoid an infinite loop. This typically involves updating a variable within the loop that affects the condition.
+	• Example: 
+Python
+
+count = 0
+while count < 5:
+    print(count)
+    count += 1 # Equivalent to count = count + 1
+
+Output: 0, 1, 2, 3, 4.
+
+3. Loop Control Statements
+These statements alter the normal flow of a loop's execution.
+	• break Statement:
+		○ Exits the loop entirely and immediately resumes execution at the statement following the loop.
+		○ Used to terminate a loop prematurely based on a specific condition.
+		○ Example: 
+Python
+
+for i in range(10):
+    if i == 5:
+        print("Breaking loop at 5")
+        break
+    print(i)
+
+Output: 0, 1, 2, 3, 4, then Breaking loop at 5. The loop stops at i=5.
+	• continue Statement:
+		○ Skips the rest of the current iteration of the loop and immediately proceeds to the next iteration.
+		○ Used to bypass certain parts of the loop's code for specific conditions.
+		○ Example (printing odd numbers): 
+Python
+
+for i in range(10):
+    if i % 2 == 0: # If i is even
+        continue   # Skip printing even numbers
+    print(i)
+
+Output: 1, 3, 5, 7, 9.
+	• pass Statement:
+		○ A null operation; it does nothing. It's a placeholder when a statement is syntactically required but you don't want any code to execute.
+		○ Useful for future implementation or when a condition requires an empty block.
+		○ Example: 
+Python
+
+for i in range(5):
+    if i == 3:
+        pass # Do nothing when i is 3
+    print(i)
+
+Output: 0, 1, 2, 3, 4. The loop continues normally, as pass doesn't alter flow.
+		○ Common Use Case: Defining an empty function or class for later implementation.
+
+4. Nested Loops
+	• A nested loop is a loop inside another loop.
+	• The inner loop completes all its iterations for each single iteration of the outer loop.
+	• Syntax: 
+Python
+
+for outer_item in outer_sequence:
+    for inner_item in inner_sequence:
+        # code to execute in inner loop
+	• Example: 
+Python
+
+for i in range(3): # Outer loop (0, 1, 2)
+    for j in range(2): # Inner loop (0, 1)
+        print(f"I = {i}, J = {j}")
+
+Output: 
+I = 0, J = 0
+I = 0, J = 1
+I = 1, J = 0
+I = 1, J = 1
+I = 2, J = 0
+I = 2, J = 1
+
+5. Practical Examples
+	• Calculating Sum of First 'n' Natural Numbers (using both while and for loops):
+		○ Using while loop: 
+Python
+
+n = 10
+total_sum = 0
+count = 1
+while count <= n:
+    total_sum += count # total_sum = total_sum + count
+    count += 1
+print(f"Sum of first {n} natural numbers (while loop): {total_sum}") # Output: 55
+		○ Using for loop: 
+Python
+
+n = 10
+total_sum = 0
+for i in range(1, n + 1): # range(1, 11) to include 10
+    total_sum += i
+print(f"Sum of first {n} natural numbers (for loop): {total_sum}") # Output: 55
+	• Displaying Prime Numbers between 1 and 100:
+This example uses a nested loop structure and the else block associated with a for loop. The else block of a loop executes if the loop completes without encountering a break statement.
+Python
+
+print("Prime numbers between 1 and 100:")
+for num in range(1, 101):
+    if num > 1: # Prime numbers are greater than 1
+        for i in range(2, num): # Check for divisibility from 2 up to num-1
+            if (num % i) == 0:
+                break # If divisible, it's not prime, break inner loop
+        else: # This else executes if the inner loop completed without a break (i.e., num is prime)
+            print(num)
+
+Output: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, ... (all primes up to 97)
+
+6. Common Errors and How to Avoid Them
+	• Infinite Loops: In while loops, forgetting to update the condition variable (e.g., count += 1) can lead to the loop running indefinitely.
+	• Off-by-One Errors with range(): Remember that range(stop) goes up to stop-1, and range(start, stop) goes up to stop-1. Adjust stop values (e.g., n + 1) if you need to include the "stop" value.
+	• Incorrect Indentation: As always in Python, incorrect indentation will lead to IndentationError and unexpected loop behavior.
+
+Conclusion:
+Loops are powerful tools for executing code blocks repeatedly in Python. Understanding for and while loops, along with break, continue, and pass statements, enables efficient handling of various programming tasks, especially when dealing with collections and repetitive operations.

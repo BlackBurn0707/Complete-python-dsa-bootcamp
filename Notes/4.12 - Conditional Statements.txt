@@ -1,0 +1,112 @@
+The lecture introduces Control Flow in Python, focusing specifically on conditional statements (if, elif, else) and their nested forms. It emphasizes practical examples and common errors.
+
+Control Flow: Conditional Statements in Python
+Control flow statements determine the order in which code is executed based on certain conditions.
+1. Introduction to Conditional Statements
+	• Conditional statements evaluate a condition and execute specific blocks of code only if that condition is met.
+	• They allow your program to make decisions and behave differently based on various inputs or states.
+	
+2. The if Statement
+	• The if statement evaluates a condition. If the condition is True, the indented block of code immediately following it is executed.
+	• Syntax: 
+Python
+
+if condition:
+    # code to execute if condition is True
+	• Key Point: Indentation is crucial in Python to define the code block belonging to the if statement.
+	• Example: 
+Python
+
+age = 20
+if age >= 18:
+    print("You are allowed to vote in the elections.")
+
+Explanation: Since age (20) is >= 18, the condition True, and the message is printed.
+
+3. The else Statement
+	• The else statement provides an alternative block of code to be executed if the if statement's condition is False.
+	• It acts as a default path when the initial if condition isn't met.
+	• Syntax: 
+Python
+
+if condition:
+    # code if condition is True
+else:
+    # code if condition is False
+	• Example: 
+Python
+
+age = 16
+if age >= 18:
+    print("You are eligible for voting.")
+else:
+    print("You are a minor.")
+
+Explanation: age >= 18 (16 >= 18) is False, so the code in the else block is executed, printing "You are a minor."
+
+4. The elif Statement (Else If)
+	• The elif statement allows you to check multiple conditions sequentially. It stands for "else if".
+	• If the preceding if condition is False, Python checks the elif condition. If the elif condition is True, its block of code is executed. You can have multiple elif statements.
+	• Syntax: 
+Python
+
+if condition1:
+    # code if condition1 is True
+elif condition2:
+    # code if condition1 is False AND condition2 is True
+else:
+    # code if all above conditions are False
+	• Example: 
+Python
+
+age = 17
+if age < 13:
+    print("You are a child.")
+elif age < 18: # This is checked if age < 13 was False
+    print("You are a teenager.")
+else: # This is executed if both above conditions were False
+    print("You are an adult.")
+
+Explanation: age < 13 (17 < 13) is False. Then age < 18 (17 < 18) is True, so "You are a teenager." is printed.
+
+5. Nested Conditional Statements
+	• Nested conditional statements involve placing one or more if, elif, or else statements inside another if, elif, or else block.
+	• This allows for more complex decision-making logic. Proper indentation is critical for defining these nested blocks.
+	• Example: Determine if a number is positive, negative, or zero, and then if it's even or odd. 
+Python
+
+number = int(input("Enter the number: "))
+
+if number > 0:
+    print("The number is positive.")
+    if number % 2 == 0: # Nested if for even/odd check
+        print("The number is even.")
+    else:
+        print("The number is odd.")
+elif number == 0: # Using elif for the zero case
+    print("The number is zero.")
+else: # This else corresponds to the outer if (number <= 0)
+    print("The number is negative.")
+
+Test Cases: 
+		○ Input 12: Output The number is positive., The number is even.
+		○ Input 11: Output The number is positive., The number is odd.
+		○ Input -1: Output The number is negative.
+
+6. Practical Examples and Best Practices
+	• Common Errors:
+		○ Incorrect Indentation: This is the most frequent error. Python relies heavily on indentation to define code blocks. Mismatched indentation will lead to IndentationError.
+		○ Missing Colon (:): Forgetting the colon after if, elif, or else statements will cause a SyntaxError.
+		○ Incorrect Comparison: Using assignment operator (=) instead of equality operator (==) in conditions.
+	• Best Practices:
+		○ Clear Conditions: Write conditions that are easy to understand.
+		○ Consistent Indentation: Always use consistent indentation (e.g., 4 spaces) for readability and correctness.
+		○ Handle All Cases: Ensure your if-elif-else structure covers all possible scenarios to avoid unexpected behavior.
+		○ Avoid Excessive Nesting: While powerful, too many levels of nesting can make code hard to read and maintain. Consider breaking down complex logic into smaller functions or using logical operators (and, or) to simplify conditions.
+	• Practical Example 1: Leap Year Determination (using nested conditions)
+This example demonstrates a complex nested if-elif-else structure to check if a year is a leap year based on its divisibility by 4, 100, and 400.
+	• Practical Example 2: Simple Calculator (Assignment)
+Users are encouraged to build a calculator that takes two numbers and an operation symbol (+, -, *, /) as input, then uses if-elif-else statements to perform the correct operation and display the result. This reinforces the use of conditional statements and operators.
+	• Practical Example 3: Ticket Price Determination (Assignment)
+This assignment involves determining ticket prices based on age and student status (using nested if-elif-else and logical operators).
+The lecture emphasizes that consistent practice is key to mastering these concepts.

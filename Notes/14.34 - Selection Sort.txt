@@ -1,0 +1,50 @@
+Here are notes on selection sort from the provided transcript:
+Selection Sort: Notes
+1. Introduction:
+	• Selection sort is another sorting algorithm, similar to bubble sort.
+	• It arranges elements in an array (e.g., a list of integers) in ascending or descending order.
+2. Philosophy/Core Idea:
+	• The name "select" is key.
+	• In each "pass" or "round," the algorithm selects a specific element (minimum or maximum) and places it in its correct sorted position.
+3. How it Works (Ascending Order - finding minimum):
+	• Goal: To get the smallest element to its correct starting position (index 0), then the second smallest to index 1, and so on.
+	• Process (in each pass): 
+		1. Identify the unsorted part: Initially, the entire array is unsorted. In subsequent passes, the already sorted portion (at the beginning of the array) is ignored.
+		2. Find the minimum: Iterate through the unsorted part of the array to find the absolute minimum element.
+		3. Swap: Once the minimum element is found, swap it with the element at the first position of the unsorted part. This places the minimum element into its correct sorted position.
+	• Example Walkthrough (Initial array: 12, 25, 11, 34, 90, 22): 
+		○ Pass 1: 
+			§ Unsorted part: [12, 25, 11, 34, 90, 22]
+			§ Minimum found: 11
+			§ Swap 11 with 12 (element at index 0).
+			§ Array becomes: [11, 25, 12, 34, 90, 22]
+			§ Result: 11 is now at its correct sorted position.
+		○ Pass 2: 
+			§ Unsorted part: [25, 12, 34, 90, 22] (11 is ignored)
+			§ Minimum found: 12
+			§ Swap 12 with 25 (element at index 1).
+			§ Array becomes: [11, 12, 25, 34, 90, 22]
+			§ Result: 12 is now at its correct sorted position.
+		○ Pass 3 (and so on): Continue this process, each time finding the minimum in the remaining unsorted portion and swapping it to its correct position.
+4. Number of Passes:
+	• Similar to bubble sort, selection sort requires n-1 passes for an array of n elements.
+	• This is because if n-1 elements are in their correct sorted positions, the last element will automatically be in its correct position.
+5. Visualization:
+	• Visualizations help understand the process.
+	• The element currently being considered as the minimum is often highlighted.
+	• The element that is finally determined to be the true minimum is swapped into place.
+6. Analogy (Teacher and Students):
+	• Imagine a teacher sorting students by height.
+	• Pass 1: Teacher asks, "Who is the smallest person in the whole line?" Once found, that child is moved to the very front of the line.
+	• Pass 2: Teacher then asks, "Who is the second smallest person among the remaining students?" Once found, that child is moved to the second position in the line, and the person originally there moves to the found child's old spot.
+	• This continues until all students are sorted by height.
+7. Key Differences from Bubble Sort:
+	• Bubble Sort: Places the largest element at the end of the unsorted portion in each pass.
+	• Selection Sort: Places the smallest element at the beginning of the unsorted portion in each pass.
+8. Coding Exercise:
+	• It is strongly recommended to code selection sort from scratch to gain confidence and a deeper understanding.
+	• Don't be discouraged if it takes time; practice improves speed and accuracy.
+9. Benefits of Understanding:
+	• Helps in coding interviews.
+	• Provides a solid foundation for understanding more complex algorithms.
+	• Develops problem-solving skills.

@@ -1,0 +1,97 @@
+The lecture introduces lambda functions in Python, explaining their anonymous nature, syntax, and primary use cases for short, single-expression operations, especially in conjunction with higher-order functions like map.
+
+Lambda Functions in Python
+1. Introduction to Lambda Functions
+	• Definition: Lambda functions are small, anonymous functions defined using the lambda keyword.
+	• Anonymous Function: This means they are functions without a name. While regular functions are defined using def and given a name, lambda functions are not.
+	• Key Characteristics:
+		○ Can have any number of arguments.
+		○ Can have only one expression (meaning one single logical operation or calculation).
+		○ The expression is automatically returned. You do not use the return keyword.
+	• Common Use Cases:
+		○ For short, one-time operations that don't require a full def function definition.
+		○ As arguments to higher-order functions like map(), filter(), and sorted(), which accept other functions as parameters.
+	• Syntax:
+Python
+
+lambda arguments: expression
+2. Creating and Calling Lambda Functions
+Let's compare a regular function with its lambda equivalent.
+	• Example 1: Simple Addition
+		○ Regular Function: 
+Python
+
+def add(a, b):
+    return a + b
+print(add(2, 3)) # Output: 5
+		○ Lambda Function: 
+Python
+
+addition_lambda = lambda a, b: a + b
+print(addition_lambda(2, 3)) # Output: 5
+
+Explanation: lambda a, b defines two arguments. : a + b is the single expression. The result of this expression is implicitly returned. The lambda function is assigned to the addition_lambda variable, which can then be called like a regular function.
+	• Example 2: Even Number Check
+		○ Regular Function: 
+Python
+
+def is_even(num):
+    return num % 2 == 0
+print(is_even(24)) # Output: True
+		○ Lambda Function: 
+Python
+
+is_even_lambda = lambda num: num % 2 == 0
+print(is_even_lambda(24)) # Output: True
+
+Explanation: lambda num takes one argument. : num % 2 == 0 is the single Boolean expression.
+	• Example 3: Sum of Three Numbers
+		○ Regular Function: 
+Python
+
+def sum_three(x, y, z):
+    return x + y + z
+print(sum_three(12, 13, 14)) # Output: 39
+		○ Lambda Function: 
+Python
+
+sum_three_lambda = lambda x, y, z: x + y + z
+print(sum_three_lambda(12, 13, 14)) # Output: 39
+3. map() Function with Lambda
+The map() function is a higher-order function that applies a given function to all items in an input list (or other iterable) and returns an iterator of the results.
+	• map() Syntax: map(function, iterable)
+	• Why use map() with lambda? It allows for applying a transformation to each element of a collection concisely, without writing a full def function or a for loop.
+	• Example: Squaring Numbers in a List
+		○ Traditional Approach (using def and for loop, or list comprehension): 
+Python
+
+numbers = [1, 2, 3, 4, 5, 6]
+# Using def function
+def square(num):
+    return num**2
+squared_numbers_def = [square(n) for n in numbers] # or a for loop
+print(squared_numbers_def) # Output: [1, 4, 9, 16, 25, 36]
+
+# Using list comprehension directly
+squared_numbers_lc = [n**2 for n in numbers]
+print(squared_numbers_lc) # Output: [1, 4, 9, 16, 25, 36]
+		○ Using map() with lambda: 
+Python
+
+numbers = [1, 2, 3, 4, 5, 6]
+squared_numbers_map_lambda = map(lambda x: x**2, numbers)
+
+# map() returns a map object (an iterator), so convert to list to see results
+print(list(squared_numbers_map_lambda)) # Output: [1, 4, 9, 16, 25, 36]
+
+Explanation: lambda x: x**2 is the function applied to each x from the numbers list. map() handles the iteration internally.
+		
+4. Higher-Order Functions (Brief Mention)
+	• The lecture briefly touches upon higher-order functions, which are functions that either: 
+		○ Take one or more functions as arguments (like map, filter, sorted).
+		○ Return a function as their result.
+	• map() and filter() will be discussed in more detail in upcoming videos.
+
+Conclusion:
+Lambda functions are a powerful tool for writing short, single-expression, anonymous functions in Python. They significantly improve code conciseness and are particularly effective when used in conjunction with higher-order functions like map() and filter() for transformations and filtering of data collections. This allows for cleaner and often more efficient code than traditional def functions for simple operations.
+Are you excited to explore map() and filter() with lambda functions in more detail, or would you like to revisit any other function concepts?

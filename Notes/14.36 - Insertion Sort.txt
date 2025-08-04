@@ -1,0 +1,60 @@
+Here are notes from the transcript about insertion sort:
+Insertion Sort: Notes
+1. Introduction:
+	• Insertion sort is another sorting algorithm.
+	• Builds upon the understanding of bubble and selection sorts.
+2. Core Philosophy/Idea (Card Analogy):
+	• The best way to understand insertion sort is by thinking about how you sort playing cards in your hand.
+	• You maintain a sorted "hand" (subarray) and pick up new cards, inserting them into their correct position within your already sorted hand.
+	• Key Concept: Maintain a sorted sub-array (or sub-list) at the beginning of the array. Elements are then picked from the unsorted part and "inserted" into their correct position within this sorted sub-array.
+3. How it Works (Step-by-Step with Example):
+	• Initial Array: 12, 25, 11, 34, 90, 22 (Indices: 0, 1, 2, 3, 4, 5)
+	• Underlying Principle: In each "round" or "pass," an element from the unsorted portion is taken and inserted into its correct place within the already sorted portion. This often involves "shifting" elements to make space.
+	• Round 1 (Implicit):
+		○ A single element (e.g., 12) is considered inherently sorted.
+		○ Sorted part: [12] | Unsorted part: [25, 11, 34, 90, 22]
+		○ Note: The first element is always sorted by itself, so the first "active" comparison usually starts from the second element.
+	• Round 2 (Processing element at index 1: 25):
+		○ Take 25. Compare it with 12 (the last element of the sorted part).
+		○ 25 > 12, so 25 is already in its correct relative position. No shift needed.
+		○ Sorted part: [12, 25] | Unsorted part: [11, 34, 90, 22]
+	• Round 3 (Processing element at index 2: 11):
+		○ Take 11.
+		○ Compare 11 with 25. 11 < 25, so 25 needs to shift right. 
+			§ Array temporarily: [12, __, 25, 34, 90, 22] (11 is "held")
+		○ Compare 11 with 12. 11 < 12, so 12 needs to shift right. 
+			§ Array temporarily: [__, 12, 25, 34, 90, 22] (11 is "held")
+		○ 11 reaches the beginning of the array (or finds no smaller element to its left). Insert 11.
+		○ Array becomes: [11, 12, 25, 34, 90, 22]
+		○ Sorted part: [11, 12, 25] | Unsorted part: [34, 90, 22]
+	• Round 4 (Processing element at index 3: 34):
+		○ Take 34.
+		○ Compare 34 with 25. 34 > 25.
+		○ 34 is already in its correct relative position within the current sorted sub-array.
+		○ Array becomes: [11, 12, 25, 34, 90, 22]
+		○ Sorted part: [11, 12, 25, 34] | Unsorted part: [90, 22]
+	• Round 5 (Processing element at index 4: 90):
+		○ Take 90.
+		○ Compare 90 with 34. 90 > 34.
+		○ 90 is already in its correct relative position.
+		○ Array becomes: [11, 12, 25, 34, 90, 22]
+		○ Sorted part: [11, 12, 25, 34, 90] | Unsorted part: [22]
+	• Round 6 (Processing element at index 5: 22):
+		○ Take 22.
+		○ Compare 22 with 90. 22 < 90, so 90 shifts right.
+		○ Compare 22 with 34. 22 < 34, so 34 shifts right.
+		○ Compare 22 with 25. 22 < 25, so 25 shifts right.
+		○ Compare 22 with 12. 22 > 12. Stop. Insert 22 after 12.
+		○ Array becomes: [11, 12, 22, 25, 34, 90]
+		○ Final Sorted Array: [11, 12, 22, 25, 34, 90]
+4. Number of Rounds/Passes:
+	• Effectively, it takes n-1 rounds for an array of n elements (since the first element is considered sorted by default).
+5. Key Characteristics/Observations:
+	• Sorted Sub-array: A crucial concept is maintaining a sorted sub-array at the beginning of the list.
+	• Shifting, not just Swapping: Elements are often shifted to the right to make space for the element being inserted. This is a common operation in insertion sort.
+	• Efficiency (Best Case): If the array is already sorted, insertion sort performs very well (linear time complexity, O(n)) because no elements need to be shifted.
+	• Comparison Optimization: Once an element being inserted is found to be greater than an element in the sorted sub-array, no further comparisons to the left are needed because the left part is already sorted.
+6. Importance of Implementation:
+	• Coding insertion sort from scratch is highly recommended.
+	• The "shifting" technique learned here is valuable for other coding problems, not just sorting algorithms.
+	• Understanding different sorting techniques helps in choosing the right algorithm for various scenarios and problem-solving.

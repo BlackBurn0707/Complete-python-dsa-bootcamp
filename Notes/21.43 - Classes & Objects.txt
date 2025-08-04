@@ -1,0 +1,221 @@
+## Python Object-Oriented Programming (OOP): Classes and Objects
+
+Object-Oriented Programming (OOP) is a powerful programming paradigm that structures programs around "objects" rather than "actions" and data rather than logic. Python is a multi-paradigm language that fully supports OOP, allowing for code reusability, modularity, and efficient development of real-world applications.
+
+-----
+
+### **1. Core Concepts: Class and Object**
+
+  * **Class:**
+
+      * A **blueprint** or a template for creating objects.
+      * It defines the common **attributes** (data/properties) and **methods** (functions/behaviors) that all objects created from this class will have.
+      * Classes do not occupy memory until an object is created from them.
+      * Conventionally, class names are written in `CamelCase` (e.g., `Car`, `Dog`, `BankAccount`).
+
+  * **Object (Instance):**
+
+      * A concrete **instance** of a class.
+      * An object is a real-world entity created based on the class blueprint.
+      * Each object has its own unique set of attribute values.
+      * Creating an object from a class is called **instantiation**.
+
+**Example: `Car` Class**
+
+```python
+class Car:
+    # An empty class for demonstration
+    pass
+
+# Creating objects (instantiation)
+audi = Car()  # audi is an object (instance) of the Car class
+bmw = Car()   # bmw is another object (instance) of the Car class
+
+print(type(audi)) # Output: <class '__main__.Car'>
+print(audi)       # Output: <__main__.Car object at 0x...> (shows memory location)
+print(type(bmw))  # Output: <class '__main__.Car'>
+print(bmw)        # Output: <__main__.Car object at 0x...>
+```
+
+-----
+
+### **2. Attributes (Instance Variables)**
+
+Attributes are variables that store data associated with an object. Each object (instance) can have its own specific values for these attributes.
+
+  * **Defining Attributes (Improper Way - Avoid):**
+    You *can* directly add attributes to an object after it's created, but this is not the recommended practice for defining core attributes, as it leads to inconsistent objects (not all objects of the same class will necessarily have the same attributes).
+
+    ```python
+    # (Continuing from Car example)
+    audi.windows = 4 # Adding 'windows' attribute to the 'audi' object
+    print(audi.windows) # Output: 4
+
+    tata = Car()
+    # tata.doors = 4 # This is OK to add, but it's not a consistent way to define attributes
+    # print(tata.windows) # This would cause an AttributeError: 'Car' object has no attribute 'windows'
+    ```
+
+-----
+
+### **3. The Constructor (`__init__` method)**
+
+The `__init__` method is a special method in Python classes, also known as the **constructor**. It's automatically called whenever a new object (instance) of the class is created.
+
+  * **Purpose:** To initialize the attributes (instance variables) of the object when it's created.
+  * **Signature:** `def __init__(self, parameter1, parameter2, ...):`
+      * `self`: A conventional name for the first parameter of any instance method, which refers to the instance of the class itself. It's automatically passed by Python when you call a method on an object. Through `self`, you can access the object's attributes and other methods.
+      * `parameter1, parameter2, ...`: These are the values you pass when creating an object, which will be used to set the initial state of the object's attributes.
+
+**Example: `Dog` Class with Attributes and Constructor**
+
+```python
+class Dog:
+    def __init__(self, name, age):
+        """
+        Constructor to initialize a Dog object with a name and an age.
+        'self.name' and 'self.age' are instance variables.
+        """
+        self.name = name  # Assign parameter 'name' to instance variable 'self.name'
+        self.age = age    # Assign parameter 'age' to instance variable 'self.age'
+
+# Creating Dog objects (instantiating)
+# When Dog() is called, __init__ is automatically executed.
+dog1 = Dog("Buddy", 3)
+dog2 = Dog("Lucy", 4)
+
+# Accessing instance variables (attributes)
+print(f"Dog 1: Name - {dog1.name}, Age - {dog1.age}") # Output: Dog 1: Name - Buddy, Age - 3
+print(f"Dog 2: Name - {dog2.name}, Age - {dog2.age}") # Output: Dog 2: Name - Lucy, Age - 4
+
+# Trying to create without required arguments will raise a TypeError
+# dog3 = Dog("Max") # TypeError: Dog.__init__() missing 1 required positional argument: 'age'
+```
+
+-----
+
+### **4. Methods (Instance Methods)**
+
+Methods are functions defined inside a class that perform operations on the object's attributes or define the object's behavior.
+
+  * **Signature:** `def method_name(self, parameter1, ...):`
+      * Like `__init__`, the first parameter is always `self`, allowing the method to access the object's own attributes (e.g., `self.name`, `self.age`) and call other methods.
+
+**Example: `Dog` Class with a Method (`bark`)**
+
+```python
+class Dog:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def bark(self):
+        """
+        An instance method that makes the dog 'bark'.
+        It uses the 'self.name' attribute of the specific dog object.
+        """
+        print(f"{self.name} says woof!")
+
+# Creating Dog objects
+dog1 = Dog("Buddy", 3)
+dog2 = Dog("Lucy", 4)
+
+# Calling instance methods on objects
+dog1.bark() # Output: Buddy says woof!
+dog2.bark() # Output: Lucy says woof!
+```
+
+-----
+
+### **5. Modeling a Bank Account (Comprehensive Example)**
+
+This example demonstrates how to apply OOP concepts to model a real-world entity, a bank account, with its attributes and behaviors.
+
+  * **Attributes (Instance Variables):** `owner`, `balance`
+  * **Methods (Instance Methods):** `deposit`, `withdraw`, `get_balance`
+
+<!-- end list -->
+
+```python
+class BankAccount:
+    """
+    A class to represent a simple bank account.
+    """
+    def __init__(self, owner, balance=0):
+        """
+        Initializes a new bank account.
+
+        Args:
+            owner (str): The name of the account owner.
+            balance (float, optional): The initial balance. Defaults to 0.
+        """
+        self.owner = owner      # Instance variable for account owner
+        self.balance = float(balance) # Instance variable for account balance, ensure it's a float
+
+    def deposit(self, amount):
+        """
+        Deposits a specified amount into the account.
+
+        Args:
+            amount (float): The amount to deposit. Must be positive.
+        """
+        if amount <= 0:
+            print("Deposit amount must be positive.")
+            return
+
+        self.balance += amount
+        print(f"Deposited: ${amount:.2f}. New balance: ${self.balance:.2f}")
+
+    def withdraw(self, amount):
+        """
+        Withdraws a specified amount from the account.
+
+        Args:
+            amount (float): The amount to withdraw. Must be positive.
+        """
+        if amount <= 0:
+            print("Withdrawal amount must be positive.")
+            return
+        if amount > self.balance:
+            print(f"Insufficient funds. Current balance: ${self.balance:.2f}. Attempted withdrawal: ${amount:.2f}")
+        else:
+            self.balance -= amount
+            print(f"Withdrew: ${amount:.2f}. New balance: ${self.balance:.2f}")
+
+    def get_balance(self):
+        """
+        Returns the current balance of the account.
+
+        Returns:
+            float: The current balance.
+        """
+        return self.balance
+
+# --- Creating an object and performing operations ---
+my_account = BankAccount("Krish", 5000) # Initial deposit of $5000
+
+print(f"Initial balance for {my_account.owner}: ${my_account.get_balance():.2f}")
+
+my_account.deposit(100) # Deposit $100
+my_account.withdraw(300) # Withdraw $300
+my_account.withdraw(6000) # Attempt to withdraw more than balance
+
+print(f"Final balance for {my_account.owner}: ${my_account.get_balance():.2f}")
+
+# Output:
+# Initial balance for Krish: $5000.00
+# Deposited: $100.00. New balance: $5100.00
+# Withdrew: $300.00. New balance: $4800.00
+# Insufficient funds. Current balance: $4800.00. Attempted withdrawal: $6000.00
+# Final balance for Krish: $4800.00
+```
+
+-----
+
+### **Key Takeaways for OOP in Python:**
+
+  * **Modularity and Reusability:** Classes allow you to bundle related data and functions, making code easier to manage, understand, and reuse across different parts of an application.
+  * **Real-World Modeling:** OOP provides a natural way to model real-world entities and their interactions.
+  * **`self` Keyword:** Essential for accessing instance-specific attributes and methods within a class. It always refers to the current instance of the class.
+  * **`__init__` Constructor:** The standard way to initialize the state (attributes) of a new object when it's created.
+  * **Good Practice:** Use `CamelCase` for class names. Initialize all core attributes in the `__init__` method.

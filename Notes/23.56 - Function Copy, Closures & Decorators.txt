@@ -1,0 +1,165 @@
+### **Core Concept: Python Decorators**
+
+**Decorators** are a powerful feature in Python that allow you to **modify or extend the behavior of a function or method without permanently altering its source code**. They act as wrappers, adding functionality before or after the target function runs.
+
+-----
+
+### **Prerequisites for Decorators**
+
+To understand decorators, you must first grasp two key concepts: function copy and closures.
+
+#### **1. Function Copy**
+
+In Python, functions are first-class objects. This means you can assign a function to a variable, just like any other data type.
+
+  * **Concept**: You can create a "copy" or, more accurately, a **new reference** to a function by assigning it to a new variable.
+  * **Key Feature**: Even if the original function reference is deleted, the new variable will still hold a reference to the function object in memory and can be used to execute it.
+
+**Example:**
+
+```python
+def welcome():
+    return "Welcome to the Advanced Python course."
+
+# Create a new reference to the welcome function
+wel = welcome
+
+# Execute the function using the new reference
+print(wel()) # Output: Welcome to the Advanced Python course.
+
+# Delete the original function name
+del welcome
+
+# The new reference 'wel' still works
+print(wel()) # Output: Welcome to the Advanced Python course.
+```
+
+-----
+
+#### **2. Closures**
+
+A closure occurs when a nested (or inner) function remembers and has access to variables from its containing (or outer) function's scope, even after the outer function has finished executing.
+
+  * **Structure**: A function defined inside another function.
+  * **Key Feature**: The inner function can access local variables of the outer function. The outer function typically returns the inner function *without executing it*.
+
+**Example:**
+
+```python
+def main_welcome(msg):
+    # This is a local variable of the outer function
+    message = msg
+
+    def sub_welcome():
+        # The inner function accesses 'message' from the outer scope
+        print("Welcome to the Advanced Python course.")
+        print(message)
+        print("Please learn this concept properly.")
+
+    # Return the inner function, but don't call it
+    return sub_welcome
+
+# When main_welcome is called, it returns the sub_welcome function
+# The returned function is a closure that "remembers" the 'msg' variable
+welcome_func = main_welcome("Welcome Everyone!")
+welcome_func()
+```
+
+**Output:**
+
+```
+Welcome to the Advanced Python course.
+Welcome Everyone!
+Please learn this concept properly.
+```
+
+-----
+
+### **Understanding Decorators**
+
+A decorator is essentially a callable (usually a function) that takes another function as an argument, adds some functionality, and returns another callable. The `@` syntax is "syntactic sugar" that makes this process cleaner.
+
+#### **How Decorators Work**
+
+Writing this:
+
+```python
+@my_decorator
+def say_hello():
+    print("Hello!")
+```
+
+is just a shortcut for this:
+
+```python
+def say_hello():
+    print("Hello!")
+
+say_hello = my_decorator(say_hello)
+```
+
+#### **Basic Decorator Example**
+
+Here, `my_decorator` adds print statements before and after the execution of the function it decorates.
+
+```python
+def my_decorator(func):
+    # The 'wrapper' is the closure that gets returned
+    def wrapper():
+        print("Something is happening before the function is called.")
+        func() # Execute the original function
+        print("Something is happening after the function is called.")
+    return wrapper
+
+@my_decorator
+def say_hello():
+    print("Hello!")
+
+# Calling the decorated function
+say_hello()
+```
+
+**Output:**
+
+```
+Something is happening before the function is called.
+Hello!
+Something is happening after the function is called.
+```
+
+-----
+
+### **Decorators with Arguments**
+
+To create a decorator that accepts its own arguments (e.g., `@repeat(3)`), you need an extra layer of nesting.
+
+  * The **outermost function** (`repeat`) takes the arguments (e.g., `n=3`) and returns the actual decorator.
+  * The **middle function** (`decorator`) takes the function to be decorated.
+  * The **innermost function** (`wrapper`) executes the logic.
+
+**Example:**
+
+```python
+def repeat(n):  # 1. Takes the decorator's arguments
+    def decorator(func):  # 2. Takes the function to be decorated
+        def wrapper(*args, **kwargs):  # 3. The final wrapper
+            for _ in range(n):
+                func(*args, **kwargs)
+        return wrapper
+    return decorator
+
+@repeat(3)
+def greet():
+    print("Hello")
+
+# Calling the decorated function
+greet()
+```
+
+**Output:**
+
+```
+Hello
+Hello
+Hello
+```

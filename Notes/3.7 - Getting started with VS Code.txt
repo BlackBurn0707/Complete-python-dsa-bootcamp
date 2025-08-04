@@ -1,0 +1,54 @@
+The speaker is beginning a Python series and will be using VS Code as their IDE. They find VS Code ideal for its support of Jupyter notebooks, Python files, easy environment creation, extensions, and code assistance.
+
+Setting Up Your Python Environment in VS Code
+The speaker emphasizes the importance of creating a new environment for each project to avoid conflicts with different package versions, as packages are frequently updated with new features. For this series, they will be using Python 3.12, focusing on new features from 3.10 to 3.12.
+1. Creating the Environment
+	• They use conda for environment management.
+	• Open Command Prompt (not PowerShell).
+	• Run the command: conda create -p venv python==3.12 
+		○ -p venv: specifies the environment name as venv (you can choose any name).
+		○ python==3.12: specifies the Python version to be 3.12.
+	• After running the command, type y and press Enter to proceed with the installation of basic packages. This process will create a venv folder containing necessary Python project files like DLL and include folders.
+	
+2. Activating the Environment
+	• To activate the newly created environment, use the command: conda activate venv
+	• Once activated, you'll see (venv) preceding your command prompt, indicating that the venv environment is active.
+	
+3. Running a Python File (.py)
+	• Create a Python file (e.g., app.py) in your project directory.
+	• Write some Python code (e.g., print(1 + 1)).
+	• Ensure you are in the same folder location as app.py and have activated your venv environment in the terminal.
+	• Execute the file using: python app.py
+	
+Working with Jupyter Notebooks (.ipynb) in VS Code
+The speaker also demonstrates how to set up Jupyter notebooks within VS Code.
+1. Creating a Jupyter Notebook
+	• Create a new folder for your project (e.g., Python Basics).
+	• Inside this folder, create a new Jupyter notebook file (e.g., test.ipynb).
+	• VS Code will detect kernels and prompt you to select one. Choose the venv environment you created (Python 3.12.0).
+	
+2. Jupyter Notebook Cells
+	• Code Cells: These are for writing and executing Python code.
+	• Markdown Cells: These are for writing comments, titles, or other descriptive text using Markdown syntax.
+	• To execute a cell, press Shift + Enter.
+	
+3. Installing ipykernel for Jupyter Notebooks
+	• When you try to run a code cell in a new Jupyter notebook with your venv environment, you might encounter an error stating that the ipykernel package is required.
+	• ipykernel provides the kernel necessary for Jupyter notebooks to execute Python code.
+	• To install it, activate your venv environment in the terminal and run: pip install ipykernel
+	• Once ipykernel is installed, you can run your Jupyter notebook cells successfully.
+	
+4. Managing Project Dependencies with requirements.txt
+	• The speaker recommends creating a requirements.txt file in your project's root directory.
+	• This file will list all the packages your project depends on (e.g., ipykernel).
+	• In the future, you can add other packages like pandas and numpy to this file.
+	• You can then install all listed packages using pip install -r requirements.txt.
+
+Summary of the Session
+	• Learned how to create a dedicated Python environment using conda for project isolation.
+	• Understood the importance of environments to prevent package conflicts.
+	• Activated the environment and ran a basic Python script.
+	• Set up and ran a Jupyter notebook within VS Code.
+	• Installed ipykernel, a crucial package for running Jupyter notebooks.
+	• Introduced requirements.txt for managing project dependencies.
+The speaker concludes by stating that in the next session, they will begin with Python basics. They deleted the Python Basics folder for now but kept requirements.txt to update packages as needed in future lessons.

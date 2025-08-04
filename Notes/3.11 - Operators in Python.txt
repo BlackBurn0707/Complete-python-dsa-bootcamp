@@ -1,0 +1,104 @@
+The lecture covers operators in Python, categorizing them into arithmetic, comparison, and logical operators. It explains their functionality with practical examples.
+
+Operators in Python
+Operators are special symbols that perform operations on values and variables.
+1. Arithmetic Operators
+Used to perform basic mathematical calculations.
+	• Addition (+): Adds two operands. 
+		○ Example: a = 10, b = 5, a + b results in 15.
+	• Subtraction (-): Subtracts the second operand from the first. 
+		○ Example: a = 10, b = 5, a - b results in 5.
+	• Multiplication (*): Multiplies two operands. 
+		○ Example: a = 10, b = 5, a * b results in 50.
+	• Division (/): Divides the first operand by the second. Always returns a float result. 
+		○ Example: a = 10, b = 5, a / b results in 2.0.
+		○ Example: a = 21, b = 5, a / b results in 4.2.
+	• Floor Division (//): Divides the first operand by the second and returns the integer part of the quotient (removes the decimal part). 
+		○ Example: a = 10, b = 5, a // b results in 2.
+		○ Example: a = 21, b = 5, a // b results in 4.
+	• Modulus (%): Returns the remainder of the division. 
+		○ Example: a = 10, b = 5, a % b results in 0 (10 divided by 5 has a remainder of 0).
+	• Exponentiation (**): Raises the first operand to the power of the second. 
+		○ Example: a = 10, b = 5, a ** b results in 100000 (10 to the power of 5).
+
+2. Comparison Operators
+Used to compare two values and return a Boolean result (True or False).
+	• Equal to (==): Checks if two operands are equal. 
+		○ Example: a = 10, b = 10, a == b results in True.
+		○ Example (string comparison): str1 = "Krish", str2 = "Krish", str1 == str2 results in True.
+		○ Case Sensitivity: str1 = "Krish", str2 = "krish", str1 == str2 results in False.
+	• Not equal to (!=): Checks if two operands are not equal. 
+		○ Example: str1 = "Krish", str2 = "krish", str1 != str2 results in True.
+	• Greater than (>): Checks if the first operand is greater than the second. 
+		○ Example: num1 = 45, num2 = 55, num1 > num2 results in False.
+	• Less than (<): Checks if the first operand is less than the second. 
+		○ Example: num1 = 45, num2 = 55, num1 < num2 results in True.
+	• Greater than or equal to (>=): Checks if the first operand is greater than or equal to the second. 
+		○ Example: num1 = 45, num2 = 45, num1 >= num2 results in True.
+		○ Example: num1 = 46, num2 = 45, num1 >= num2 results in True.
+	• Less than or equal to (<=): Checks if the first operand is less than or equal to the second. 
+		○ Example: num1 = 45, num2 = 45, num1 <= num2 results in True.
+		○ Example: num1 = 44, num2 = 45, num1 <= num2 results in True.
+
+3. Logical Operators
+Used to combine conditional statements (Boolean expressions) and return a Boolean result.
+	• and Operator: Returns True if both operands are True. Otherwise, it returns False. 
+		○ Truth Table: 
+			§ True and True -> True
+			§ True and False -> False
+			§ False and True -> False
+			§ False and False -> False
+		○ Example: 
+Python
+
+x = True
+y = False
+result_and = x and y
+print(result_and) # Output: False
+	• or Operator: Returns True if at least one of the operands is True. It returns False only if both operands are False. 
+		○ Truth Table: 
+			§ True or True -> True
+			§ True or False -> True
+			§ False or True -> True
+			§ False or False -> False
+		○ Example: 
+Python
+
+x = True
+y = False
+result_or = x or y
+print(result_or) # Output: True
+	• not Operator: Acts as a logical negation. It reverses the Boolean state of the operand. 
+		○ Truth Table: 
+			§ not True -> False
+			§ not False -> True
+		○ Example: 
+Python
+
+x = True
+result_not = not x
+print(result_not) # Output: False
+
+Practical Example: Simple Calculator with All Operators
+This example combines the input() function with various arithmetic operators to create a functional calculator.
+Python
+
+# Get user input for two numbers (converted to float for versatility)
+num1 = float(input("Enter first number: "))
+num2 = float(input("Enter second number: "))
+# Perform operations
+addition = num1 + num2
+subtraction = num1 - num2
+multiplication = num1 * num2
+division = num1 / num2
+floor_division = num1 // num2
+modulus = num1 % num2
+exponentiation = num1 ** num2
+# Display results
+print(f"Addition: {addition}")
+print(f"Subtraction: {subtraction}")
+print(f"Multiplication: {multiplication}")
+print(f"Division: {division}")
+print(f"Floor Division: {floor_division}")
+print(f"Modulus: {modulus}")
+print(f"Exponentiation: {exponentiation}")

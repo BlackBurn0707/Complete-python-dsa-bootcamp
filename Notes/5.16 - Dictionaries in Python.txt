@@ -1,0 +1,172 @@
+The lecture focuses on Dictionaries in Python, a crucial data structure. It covers their definition, creation, accessing and modifying elements, various dictionary methods, iteration, nested dictionaries, dictionary comprehension, and common pitfalls.
+
+Data Structures in Python: Dictionaries
+Dictionaries are a powerful and widely used data structure in Python, optimized for retrieving data.
+1. Introduction to Dictionaries
+	• Definition: Dictionaries are an unordered collection of items that store data in key-value pairs.
+	• Key Characteristics: 
+		○ Key-Value Pairs: Each item in a dictionary consists of a key and its associated value (e.g., key: value).
+		○ Unordered (in older Python versions): As of Python 3.7+, dictionaries maintain insertion order. However, conceptually, they are often still described as unordered compared to sequences like lists.
+		○ Keys must be Unique: Every key in a dictionary must be distinct. If you assign a new value to an existing key, the old value is overwritten.
+		○ Keys must be Immutable: Keys can be strings, numbers, or tuples (any immutable data type). Mutable types like lists or other dictionaries cannot be keys.
+		○ Values can be of Any Type: Values can be any Python data type (strings, numbers, lists, other dictionaries, etc.).
+		
+2. Creating Dictionaries
+	• Dictionaries are defined using curly braces {}.
+	• Empty Dictionary: 
+		○ empty_dict = {}
+		○ empty_dict_2 = dict() (using the dict() constructor)
+	• Dictionary with Key-Value Pairs: 
+Python
+
+student = {
+    "name": "Krish",
+    "age": 32,
+    "grade": 'A'
+}
+print(student) # Output: {'name': 'Krish', 'age': 32, 'grade': 'A'}
+print(type(student)) # Output: <class 'dict'>
+	• Handling Duplicate Keys: If you define a dictionary with duplicate keys, Python will overwrite the earlier value with the last value assigned to that key. The key itself will still be unique. 
+Python
+
+my_dict = {"a": 1, "b": 2, "a": 3}
+print(my_dict) # Output: {'a': 3, 'b': 2} - 'a':1 was overwritten by 'a':3
+	
+3. Accessing Dictionary Elements
+You can access values using their corresponding keys.
+	• Using Square Brackets []: 
+Python
+
+student = {"name": "Krish", "age": 32, "grade": 'A'}
+print(student["grade"]) # Output: A
+print(student["age"])   # Output: 32
+# print(student["address"]) # Would raise KeyError if "address" doesn't exist
+	• Using the get() Method: This method is safer as it returns None (or a specified default value) if the key is not found, instead of raising a KeyError. 
+Python
+
+print(student.get("grade"))     # Output: A
+print(student.get("last_name")) # Output: None (key not found)
+# Providing a default value if key is not found
+print(student.get("last_name", "Not Available")) # Output: Not Available
+	
+4. Modifying Dictionary Elements
+Dictionaries are mutable, allowing you to add, update, or delete key-value pairs.
+	• Updating Existing Value: Assign a new value to an existing key. 
+Python
+
+student = {"name": "Krish", "age": 32, "grade": 'A'}
+student["age"] = 33 # Update the age
+print(student) # Output: {'name': 'Krish', 'age': 33, 'grade': 'A'}
+	• Adding New Key-Value Pair: Assign a value to a new key. 
+Python
+
+student["address"] = "India" # Add a new key 'address'
+print(student) # Output: {'name': 'Krish', 'age': 33, 'grade': 'A', 'address': 'India'}
+	• Deleting a Key-Value Pair: Use the del keyword. 
+Python
+
+del student["grade"] # Delete the 'grade' key and its value
+print(student) # Output: {'name': 'Krish', 'age': 33, 'address': 'India'}
+	
+5. Common Dictionary Methods
+	• keys(): Returns a view object that displays a list of all the keys in the dictionary. 
+Python
+
+print(student.keys()) # Output: dict_keys(['name', 'age', 'address'])
+	• values(): Returns a view object that displays a list of all the values in the dictionary. 
+Python
+
+print(student.values()) # Output: dict_values(['Krish', 33, 'India'])
+	• items(): Returns a view object that displays a list of key-value pair tuples. 
+Python
+
+print(student.items()) # Output: dict_items([('name', 'Krish'), ('age', 33), ('address', 'India')])
+	• copy() (Shallow Copy): Creates a shallow copy of the dictionary. Changes to the copied dictionary do not affect the original, unless nested mutable objects are involved. 
+		○ Direct Assignment (Reference): student_copy = student creates a reference, so changes to student_copy will affect student.
+		○ Shallow Copy: student_copy_one = student.copy() creates an independent copy. 
+Python
+
+original_student = {"name": "Krish", "age": 32}
+copied_student = original_student.copy()
+original_student["name"] = "Krish 3" # Change original
+print(original_student) # Output: {'name': 'Krish 3', 'age': 32}
+print(copied_student)   # Output: {'name': 'Krish', 'age': 32} (copied_student remains unchanged)
+	• clear(): Removes all elements from the dictionary.
+	• update(other_dict): Merges other_dict into the current dictionary. If keys overlap, values from other_dict overwrite existing values.
+	
+6. Iterating Over Dictionaries
+You can iterate over dictionary keys, values, or key-value pairs using for loops.
+	• Iterating Over Keys (default): 
+Python
+
+for key in student: # or for key in student.keys():
+    print(key)
+	• Iterating Over Values: 
+Python
+
+for value in student.values():
+    print(value)
+	• Iterating Over Key-Value Pairs (.items()): 
+Python
+
+for key, value in student.items():
+    print(f"{key}: {value}")
+	
+7. Nested Dictionaries
+	• A dictionary can contain other dictionaries as its values, creating a hierarchical structure.
+	• Example: 
+Python
+
+students_data = {
+    "student_one": {"name": "Krish", "age": 32},
+    "student_two": {"name": "Peter", "age": 35}
+}
+	• Accessing Nested Elements: Access elements by chaining key lookups. 
+Python
+
+print(students_data["student_two"]["name"]) # Output: Peter
+	• Iterating Over Nested Dictionaries: 
+Python
+
+for student_id, student_info in students_data.items():
+    print(f"Student ID: {student_id}")
+    for key, value in student_info.items(): # Iterate over the inner dictionary
+        print(f"  {key}: {value}")
+	
+8. Dictionary Comprehension
+	• A concise way to create new dictionaries based on existing iterables or by transforming other dictionaries.
+	• Basic Syntax: {key_expression: value_expression for item in iterable} 
+		○ Example (Squares of numbers): 
+Python
+
+squares_dict = {x: x**2 for x in range(5)}
+print(squares_dict) # Output: {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+	• With Conditional Logic: {key_exp: value_exp for item in iterable if condition} 
+		○ Example (Squares of even numbers): 
+Python
+
+even_squares = {x: x**2 for x in range(10) if x % 2 == 0}
+print(even_squares) # Output: {0: 0, 2: 4, 4: 16, 6: 36, 8: 64}
+		
+9. Practical Examples
+	• Counting Frequency of Elements in a List: 
+Python
+
+numbers = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]
+frequency = {}
+for num in numbers:
+    if num in frequency: # Check if number is already a key
+        frequency[num] += 1
+    else:
+        frequency[num] = 1 # First occurrence, set count to 1
+print(frequency) # Output: {1: 1, 2: 2, 3: 3, 4: 4}
+	• Merging Two Dictionaries (Python 3.5+): 
+		○ Using the ** (unpacking) operator, which unpacks key-value pairs from dictionaries.
+Python
+
+dict1 = {'a': 1, 'b': 2}
+dict2 = {'b': 3, 'c': 4}
+merged_dict = {**dict1, **dict2}
+print(merged_dict) # Output: {'a': 1, 'b': 3, 'c': 4} (note: 'b' from dict2 overwrites 'b' from dict1)
+
+Dictionaries are fundamental for organizing and retrieving data based on unique keys. Their efficiency for lookup operations makes them invaluable in various programming tasks, especially when dealing with structured data, similar to how NoSQL databases store data.

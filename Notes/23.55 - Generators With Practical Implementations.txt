@@ -1,0 +1,102 @@
+## Python Generators 🐍
+
+Generators offer a simple and memory-efficient way to create **iterators**. They are a subclass of iterators and use the **`yield`** keyword to produce a series of values lazily. This "on-the-fly" value generation means they don't store the entire sequence in memory.
+
+-----
+
+### The `yield` Keyword
+
+The `yield` keyword is the key to creating a generator. A function that contains `yield` is automatically a generator function.
+
+  * **How it works:** When a generator function is called, it returns a **generator object** but doesn't start execution immediately. The code in the function only runs when `next()` is called on the generator object.
+  * **Pausing State:** When the `yield` statement is encountered, the function's state (including local variables) is "frozen," and the yielded value is returned. The next time `next()` is called, the function resumes execution right after the `yield` statement.
+
+**Example: A Square Number Generator**
+
+Instead of using `return`, which would exit the function after one value, we use `yield` to produce a value for each iteration.
+
+```python
+def square(n):
+    for i in range(n):
+        yield i ** 2
+
+# Calling the function returns a generator object
+my_gen = square(3)
+print(my_gen)
+# Output: <generator object square at 0x...>
+```
+
+-----
+
+### Consuming Values from a Generator
+
+You can retrieve values from a generator in two main ways:
+
+1.  **Using a `for` loop (most common):** The loop automatically calls `next()` and handles the `StopIteration` error.
+
+    ```python
+    # Using the 'square' generator from above
+    for num in square(3):
+        print(num)
+
+    # Output:
+    # 0
+    # 1
+    # 4
+    ```
+
+2.  **Using the `next()` function manually:** This allows you to get values one by one. You must handle the `StopIteration` error that is raised when the generator is exhausted.
+
+    ```python
+    my_gen = square(3)
+
+    print(next(my_gen)) # Output: 0
+    print(next(my_gen)) # Output: 1
+    print(next(my_gen)) # Output: 4
+    # print(next(my_gen)) # Raises StopIteration
+    ```
+
+You can also have multiple `yield` statements in a function, and each one will produce the next value in the sequence.
+
+```python
+def my_generator():
+    yield 1
+    yield 2
+    yield 3
+
+for val in my_generator():
+    print(val) # Prints 1, then 2, then 3
+```
+
+-----
+
+### Practical Example: Reading Large Files 📄
+
+Generators are extremely useful for tasks that involve large datasets, like reading big files, because they don't load the entire file into memory.
+
+**Function to read a large file line by line:**
+
+```python
+def read_large_file(file_path):
+    with open(file_path, 'r') as file:
+        for line in file:
+            yield line # Yields one line at a time
+
+# Usage
+file_path = 'large_file.txt'
+for line in read_large_file(file_path):
+    print(line.strip()) # Process each line without storing the whole file
+```
+
+This approach is highly memory-efficient, as only one line from the file is held in memory at any given moment.
+
+-----
+
+### Key Differences: Iterator vs. Generator
+
+| Feature | Iterator | Generator |
+| :--- | :--- | :--- |
+| **Creation** | Created using the `iter()` function on an existing iterable (like a list). | Created using a function with the **`yield`** keyword. |
+| **Code** | Often requires more complex code (e.g., creating a class with `__iter__` and `__next__` methods). | Allows for fast, compact, and more readable code. |
+| **State** | The state is maintained internally by the iterator object. | The function's local variable state is saved automatically between `yield` calls. |
+| **Efficiency** | Iterators are generally very memory efficient. | Generators are also highly memory efficient due to lazy evaluation. |

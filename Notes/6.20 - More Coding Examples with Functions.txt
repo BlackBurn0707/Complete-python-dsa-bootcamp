@@ -1,0 +1,254 @@
+This lecture applies Python functions to solve various real-world problems, demonstrating their practical utility in tasks like temperature conversion, password strength checking, shopping cart calculation, palindrome detection, factorial calculation using recursion, and word frequency counting in files.
+
+Practical Applications of Functions in Python
+This session demonstrates the power and versatility of functions by walking through several practical examples.
+1. Temperature Conversion Function
+This function converts temperatures between Celsius and Fahrenheit.
+	• Function Definition: 
+def convert_temperature(temperature, unit):
+"""
+Converts temperature between Celsius and Fahrenheit.
+ 
+    Args:
+        temperature (float/int): The temperature value.
+        unit (str): The unit of the input temperature ('C' for Celsius, 'F' for Fahrenheit).
+Returns:
+        float: The converted temperature.
+        None: If the unit is invalid.
+    """
+    if unit.upper() == 'C': # Convert Celsius to Fahrenheit
+        # Formula: (Celsius * 9/5) + 32
+        return (temperature * 9/5) + 32
+    elif unit.upper() == 'F': # Convert Fahrenheit to Celsius
+        # Formula: (Fahrenheit - 32) * 5/9
+        return (temperature - 32) * 5/9
+    else:
+        print("Invalid unit. Please use 'C' or 'F'.")
+        return None
+# Examples:
+print(f"25°C is {convert_temperature(25, 'C')}°F") # Output: 25°C is 77.0°F
+print(f"77°F is {convert_temperature(77, 'F')}°C") # Output: 77°F is 25.0°C
+```
+	• Key Concepts Demonstrated: Function definition with parameters, if-elif-else for conditional logic, return statement, basic arithmetic operations. .upper() is used for case-insensitive unit checking.
+
+2. Password Strength Checker
+This function assesses the strength of a given password based on several criteria.
+	• Function Definition: 
+Python
+
+def is_strong_password(password):
+    """
+    Checks if a password meets strength requirements.
+
+Criteria:
+    - Minimum 8 characters
+    - Contains at least one digit
+    - Contains at least one lowercase letter
+    - Contains at least one uppercase letter
+    - Contains at least one special character (!@#$%^&*()_+-=)
+
+Args:
+        password (str): The password to check.
+
+Returns:
+        bool: True if the password is strong, False otherwise.
+    """
+    # 1. Minimum 8 characters
+    if len(password) < 8:
+        return False
+
+# 2. Contains at least one digit
+    if not any(char.isdigit() for char in password):
+        return False
+
+# 3. Contains at least one lowercase letter
+    if not any(char.islower() for char in password):
+        return False
+
+# 4. Contains at least one uppercase letter
+    if not any(char.isupper() for char in password):
+        return False
+
+# 5. Contains at least one special character
+    special_chars = "!@#$%^&*()_+-="
+    if not any(char in special_chars for char in password):
+        return False
+
+return True # All conditions met, password is strong
+
+# Examples:
+print(f"Is 'MyPass123' strong? {is_strong_password('MyPass123')}") # Output: False (no special char)
+print(f"Is 'StrongPwd!1' strong? {is_strong_password('StrongPwd!1')}") # Output: True
+print(f"Is 'weak' strong? {is_strong_password('weak')}") # Output: False (too short, no digit, no upper, no special)
+	• Key Concepts Demonstrated: Function definition, len() for string length, any() with generator expressions for efficient character checks (.isdigit(), .islower(), .isupper()), logical not, and string membership (in).
+
+3. Calculate Total Cost of Items in a Shopping Cart
+This function calculates the total cost of items in a shopping cart represented as a list of dictionaries.
+	• Data Structure: The cart is a list of dictionaries, where each dictionary represents an item with name, price, and quantity. 
+Python
+
+cart = [
+    {"name": "Apple", "price": 0.5, "quantity": 4},
+    {"name": "Banana", "price": 0.3, "quantity": 6},
+    {"name": "Orange", "price": 0.7, "quantity": 3}
+]
+	• Function Definition: 
+Python
+
+def calculate_total_cost(items_in_cart):
+    """
+    Calculates the total cost of items in a shopping cart.
+
+Args:
+        items_in_cart (list): A list of dictionaries, where each dict has 'price' and 'quantity'.
+
+Returns:
+        float: The total cost.
+    """
+    total_cost = 0.0
+    for item in items_in_cart:
+        # Accessing dictionary values by key
+        item_price = item['price']
+        item_quantity = item['quantity']
+        total_cost += (item_price * item_quantity) # Accumulate cost
+
+return total_cost
+
+# Example:
+final_cost = calculate_total_cost(cart)
+print(f"Total cost of the shopping cart: ${final_cost:.2f}") # Output: Total cost of the shopping cart: $5.90
+	• Key Concepts Demonstrated: Iterating over a list of dictionaries, accessing dictionary values by key, accumulating a sum, and returning a float.
+
+4. Check if a String is a Palindrome
+This function determines if a given string is a palindrome (reads the same forwards and backwards).
+	• Function Definition: 
+Python
+
+def is_palindrome(s):
+    """
+    Checks if a string is a palindrome (reads the same forwards and backwards),
+    ignoring spaces and case.
+
+Args:
+        s (str): The input string.
+
+Returns:
+        bool: True if the string is a palindrome, False otherwise.
+    """
+    # Preprocessing: Convert to lowercase and remove spaces
+    cleaned_s = s.lower().replace(" ", "")
+
+# Check if the cleaned string is equal to its reverse using slicing
+    return cleaned_s == cleaned_s[::-1]
+
+# Examples:
+print(f"'Madam' is a palindrome: {is_palindrome('Madam')}") # Output: 'Madam' is a palindrome: True
+print(f"'A man a plan a canal Panama' is a palindrome: {is_palindrome('A man a plan a canal Panama')}") # Output: 'A man a plan a canal Panama' is a palindrome: True
+print(f"'Hello' is a palindrome: {is_palindrome('Hello')}") # Output: 'Hello' is a palindrome: False
+	• Key Concepts Demonstrated: String methods (.lower(), .replace()), string slicing ([::-1] for reversal), and direct comparison.
+
+5. Factorial of a Number Using Recursion
+This function calculates the factorial of a number using a recursive approach.
+	• Function Definition (Recursive): 
+Python
+
+def factorial(n):
+    """
+    Calculates the factorial of a non-negative integer using recursion.
+
+Args:
+        n (int): The number for which to calculate the factorial.
+
+Returns:
+        int: The factorial of n.
+    """
+    if n == 0 or n == 1: # Base case: factorial of 0 or 1 is 1
+        return 1
+    else: # Recursive case: n * factorial(n-1)
+        return n * factorial(n - 1)
+
+# Examples:
+print(f"Factorial of 5: {factorial(5)}") # Output: Factorial of 5: 120 (5*4*3*2*1)
+print(f"Factorial of 6: {factorial(6)}") # Output: Factorial of 6: 720
+	• Key Concepts Demonstrated: Recursion (a function calling itself), base case (condition to stop recursion), and recursive step.
+
+6. Read File and Count Word Frequency
+This function reads a text file and calculates the frequency of each word.
+	• File Content (e.g., sample.txt): 
+Hello world. How are you?
+My name is Krish. Hello Krish.
+	• Function Definition: 
+Python
+
+def count_word_frequency(file_path):
+    """
+    Reads a text file and counts the frequency of each word.
+
+Args:
+        file_path (str): The path to the text file.
+
+Returns:
+        dict: A dictionary where keys are words and values are their frequencies.
+    """
+    word_counts = {} # Initialize an empty dictionary to store word frequencies
+
+with open(file_path, 'r', encoding='utf-8') as file: # Open file in read mode
+        for line in file:
+            # Clean and split the line into words
+            # Remove punctuation and convert to lowercase
+            cleaned_line = ''.join(char for char in line if char.isalnum() or char.isspace()).lower()
+            words = cleaned_line.split() # Splits by whitespace
+
+for word in words:
+                # Update word count using .get() for convenience
+                word_counts[word] = word_counts.get(word, 0) + 1
+    return word_counts
+
+# Example:
+# Assuming 'sample.txt' exists in the same directory as the script/notebook
+file_path = "sample.txt"
+word_frequencies = count_word_frequency(file_path)
+print("Word Frequencies:", word_frequencies)
+# Expected Output (for sample.txt): {'hello': 2, 'world': 1, 'how': 1, 'are': 1, 'you': 1, 'my': 1, 'name': 1, 'is': 1, 'krish': 2}
+	• Key Concepts Demonstrated: File handling (with open(), read mode 'r', for line in file), string cleaning (.isalnum(), .isspace(), .join(), .lower(), .split()), and dictionary operations (.get() for frequency counting).
+
+7. Email Address Validator (Assignment)
+This task involves creating a function to validate an email address using regular expressions.
+	• Concept: Regular expressions (regex) are sequences of characters that define a search pattern. Python's re module is used for regex operations.
+	• Assignment (Code Provided): 
+Python
+
+import re
+
+def is_valid_email(email):
+    """
+    Validates an email address using a regular expression.
+
+Args:
+        email (str): The email string to validate.
+
+Returns:
+        bool: True if the email is valid, False otherwise.
+    """
+    # Basic email regex pattern:
+    # ^[a-zA-Z0-9._%+-]+ - Starts with one or more alphanumeric, dot, underscore, percent, plus, hyphen
+    # @                  - Followed by an '@' symbol
+    # [a-zA-Z0-9.-]+     - Followed by domain name (alphanumeric, dot, hyphen)
+    # \.                 - Followed by a literal dot
+    # [a-zA-Z]{2,}$      - Ends with at least two letters (for top-level domain like com, org, in)
+    pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+
+# re.match() checks for a match only at the beginning of the string
+    if re.match(pattern, email):
+        return True
+    else:
+        return False
+
+# Examples:
+print(f"Is 'test@example.com' valid? {is_valid_email('test@example.com')}")   # Output: True
+print(f"Is 'invalid-email' valid? {is_valid_email('invalid-email')}")         # Output: False
+print(f"Is 'user@domain.co.in' valid? {is_valid_email('user@domain.co.in')}") # Output: True
+	• Key Concepts to Explore (for the user): import re (importing modules), re.match() (regex matching), and understanding regex patterns.
+
+These examples demonstrate how functions, combined with various Python data structures and control flow, can solve diverse problems. It's crucial to practice implementing these to solidify your understanding.
+Do you have a specific real-world problem in mind that you'd like to try solving with a Python function, or would you like to explore other advanced function concepts?

@@ -1,0 +1,66 @@
+Introduction to Searching and Sorting Algorithms
+This section introduces fundamental searching and sorting algorithms, focusing on linear search as the first algorithm to learn. These operations are commonly performed on lists or arrays, and understanding efficient algorithms for them is crucial for better performance.
+
+Linear Search Algorithm
+Linear search is a straightforward algorithm used to find a target element within a list or array.
+How it Works:
+	1. Given a list (or array) and a target element.
+	2. The algorithm iterates through each element one by one from the beginning of the list to the end.
+	3. In each iteration, it compares the current element with the target.
+	4. If the current element matches the target, the algorithm returns the index of that element.
+	5. If the loop completes without finding the target (meaning the element is not present in the list), the algorithm returns -1.
+Analogy:
+Imagine looking for a specific book on a messy bookshelf without any order. You'd have to check each book, one by one, until you find the one you're looking for or realize it's not there.
+Example:
+	• List: [10, 23, 45, 70, 11]
+	• Target: 70
+	• Process:
+		○ Compare 10 with 70 (No)
+		○ Compare 23 with 70 (No)
+		○ Compare 45 with 70 (No)
+		○ Compare 70 with 70 (Yes!)
+	• Result: 3 (index of 70)
+	• List: [10, 23, 45, 70, 11]
+	• Target: 700
+	• Process:
+		○ Go through all elements. None match 700.
+	• Result: -1
+	
+Python Implementation of Linear Search
+Python
+
+def linear_search(arr, target):
+    """
+    Performs a linear search on a list/array to find the target element.
+Args:
+        arr (list): The list or array to search within.
+        target: The element to search for.
+Returns:
+        int: The index of the target if found, otherwise -1.
+    """
+    size = len(arr)  # Get the total number of elements in the array/list
+# Iterate through the list using its indices
+    for index in range(size):
+        # Compare the current element with the target
+        if arr[index] == target:
+            return index  # If found, return the current index
+# If the loop completes without finding the target, return -1
+    return -1
+# Example Usage:
+my_list = [10, 23, 45, 70, 11]
+target_found = 70
+target_not_found = 700
+result1 = linear_search(my_list, target_found)
+print(f"Target {target_found} found at index: {result1}") # Output: Target 70 found at index: 3
+result2 = linear_search(my_list, target_not_found)
+print(f"Target {target_not_found} found at index: {result2}") # Output: Target 700 found at index: -1
+Visualization and Key Concepts
+	• Iteration: The core of linear search is a for loop that iterates through each element using its index.
+	• Comparison: In each step, a simple if statement compares the current element with the target.
+	• Early Exit: If the target is found, the function returns the index immediately, stopping further iterations.
+	• Return -1: Only if the loop finishes without a match is -1 returned.
+	• Function Scope: Variables defined inside a function (like size and index in linear_search) exist only within that function's execution block and are destroyed once the function completes or returns a value. This was demonstrated using Python Tutor.
+	
+Importance of Practice
+	• It's highly recommended to practice coding these algorithms in the provided exercise environment to solidify understanding.
+	• Aim to complete a significant percentage of exercises (e.g., 60-70%) after each topic.

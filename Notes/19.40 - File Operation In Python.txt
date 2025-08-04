@@ -1,0 +1,239 @@
+## Python File Operations: Working with Text and Binary Files
+
+Python provides built-in functions and methods to interact with files, allowing you to create, read, write, and manage both text and binary files. The `with open()` statement is the recommended way to handle files, as it ensures the file is automatically closed, even if errors occur.
+
+-----
+
+### **1. Opening Files: The `open()` Function and Modes**
+
+The `open()` function is used to open a file. It takes two primary arguments: the file path and the mode.
+
+  * **Syntax:** `open(file, mode='r', encoding=None)`
+
+  * **Common Modes:**
+
+      * `'r'` (Read): Opens the file for reading. The file must exist, otherwise a `FileNotFoundError` occurs. This is the default mode.
+      * `'w'` (Write): Opens the file for writing.
+          * If the file exists, its contents are **truncated** (overwritten).
+          * If the file does not exist, a new file is created.
+      * `'a'` (Append): Opens the file for appending.
+          * If the file exists, new data is written to the end of the file.
+          * If the file does not exist, a new file is created.
+      * `'b'` (Binary mode): Used in conjunction with other modes (e.g., `'rb'`, `'wb'`, `'ab'`) to handle binary files (e.g., images, executables).
+      * `'w+'` (Write and Read): Opens the file for both writing and reading.
+          * If the file exists, its content is **truncated** (overwritten).
+          * If the file does not exist, a new file is created. The file pointer is at the beginning after writing, allowing for reading after writing.
+
+  * **The `with open(...) as file:` Statement:**
+    This is the preferred way to open files because it acts as a context manager. It automatically closes the file when the `with` block is exited, even if an error occurs, preventing resource leaks.
+
+    ```python
+    with open("example.txt", "r") as file:
+        # File operations here
+        pass
+    # File is automatically closed here
+    ```
+
+-----
+
+### **2. Reading Text Files**
+
+  * **Reading the Entire Content:**
+    The `file.read()` method reads the entire content of the file into a single string.
+
+    ```python
+    # Assume example.txt exists with content:
+    # Hello how are you.
+    # I am good.
+    # Krish is my name.
+    # Welcome to the course.
+
+    try:
+        with open("example.txt", "r") as file:
+            content = file.read()
+            print(content)
+    except FileNotFoundError:
+        print("Error: The file 'example.txt' was not found.")
+
+    # Output:
+    # Hello how are you.
+    # I am good.
+    # Krish is my name.
+    # Welcome to the course.
+    ```
+
+  * **Reading Line by Line:**
+    You can iterate directly over a file object to read its content line by line. Each line read will include the newline character (`\n`).
+
+    ```python
+    with open("example.txt", "r") as file:
+        for line in file:
+            print(line, end='') # Using end='' to avoid extra newlines from print()
+    # Output (same as above, but processed line by line):
+    # Hello how are you.
+    # I am good.
+    # Krish is my name.
+    # Welcome to the course.
+    ```
+
+  * **Removing Newline Characters (`.strip()`):**
+    The `strip()` method can be used on each line to remove leading/trailing whitespace, including newline characters.
+
+    ```python
+    with open("example.txt", "r") as file:
+        for line in file:
+            print(line.strip()) # Removes the trailing newline
+    # Output:
+    # Hello how are you.
+    # I am good.
+    # Krish is my name.
+    # Welcome to the course.
+    ```
+
+-----
+
+### **3. Writing to Text Files**
+
+  * **Overwriting a File (`'w'` mode):**
+    When opening a file in `'w'` mode, if the file exists, its content is completely erased before new data is written.
+
+    ```python
+    with open("example.txt", "w") as file:
+        file.write("Hello World!\n")
+        file.write("This is a new line.\n")
+
+    # After execution, example.txt will only contain:
+    # Hello World!
+    # This is a new line.
+    ```
+
+  * **Appending to a File (`'a'` mode):**
+    When opening a file in `'a'` (append) mode, new data is added to the end of the existing file content without deleting the previous content.
+
+    ```python
+    # Assume example.txt currently contains:
+    # Hello World!
+    # This is a new line.
+
+    with open("example.txt", "a") as file:
+        file.write("Append operation taking place.\n")
+        file.write("Another appended line.\n")
+
+    # After execution, example.txt will contain:
+    # Hello World!
+    # This is a new line.
+    # Append operation taking place.
+    # Another appended line.
+    ```
+
+  * **Writing Multiple Lines (from a list):**
+    The `file.writelines(list_of_strings)` method writes a list of strings to the file. Each string in the list is treated as a line, but you must manually include newline characters (`\n`) if you want them on separate lines in the file.
+
+    ```python
+    lines_to_write = [
+        "This is my first line.\n",
+        "The second line.\n",
+        "And the third line.\n"
+    ]
+
+    with open("example.txt", "a") as file:
+        file.writelines(lines_to_write)
+
+    # These lines will be appended to example.txt
+    ```
+
+-----
+
+### **4. Working with Binary Files**
+
+Binary files are handled similarly to text files but require the `'b'` mode (e.g., `'rb'`, `'wb'`, `'ab'`). Data written to or read from binary files must be in bytes objects.
+
+  * **Writing to a Binary File (`'wb'` mode):**
+
+    ```python
+    data_to_write = b"Hello binary world!\nThese are bytes." # 'b' prefix for bytes literal
+
+    with open("example.bin", "wb") as file:
+        file.write(data_to_write)
+
+    # 'example.bin' will be created with the byte content
+    ```
+
+  * **Reading from a Binary File (`'rb'` mode):**
+
+    ```python
+    with open("example.bin", "rb") as file:
+        content = file.read()
+        print(content)       # Output: b'Hello binary world!\nThese are bytes.'
+        print(type(content)) # Output: <class 'bytes'>
+    ```
+
+-----
+
+### **5. Reading from One File and Writing to Another**
+
+You can combine read and write operations to copy content between files.
+
+```python
+# Assuming example.txt exists with some content
+
+with open("example.txt", "r") as source_file:
+    content = source_file.read()
+
+with open("destination.txt", "w") as dest_file:
+    dest_file.write(content)
+
+# 'destination.txt' will be created with the same content as 'example.txt'
+```
+
+-----
+
+### **6. Reading and Writing with `w+` Mode and `file.seek()`**
+
+The `w+` mode allows both writing and reading. After writing, the file cursor (the position where the next read/write operation will occur) is at the end of the newly written content. To read from the beginning, you must move the cursor back to the start using `file.seek(0)`.
+
+  * **`file.seek(offset, whence=0)`:**
+
+      * `offset`: The number of bytes to move.
+      * `whence`:
+          * `0` (default): Absolute position from the beginning of the file.
+          * `1`: Relative to the current position.
+          * `2`: Relative to the end of the file.
+
+    <!-- end list -->
+
+    ```python
+    with open("example_wplus.txt", "w+") as file:
+        file.write("Hello World!\n")
+        file.write("This is a new line for w+ mode.\n")
+
+        # The cursor is now at the end of the file.
+        # If we try to read now, it will return an empty string.
+        print("Before seek:", file.read()) # Output: Before seek:
+
+        # Move the cursor to the beginning of the file (position 0)
+        file.seek(0)
+
+        # Now read the content from the beginning
+        content = file.read()
+        print("After seek:", content)
+
+    # Output:
+    # Before seek:
+    # After seek: Hello World!
+    # This is a new line for w+ mode.
+    ```
+
+-----
+
+### **7. Assignment: File Analysis**
+
+**Task:** Read a text file and count the number of lines, words, and characters.
+
+This involves:
+
+1.  Opening the file in read mode.
+2.  Iterating through lines or reading the entire content.
+3.  Counting lines (either by iterating or by splitting `read()` content by `\n`).
+4.  Counting words (splitting lines or full content by whitespace).
+5.  Counting characters (using `len()` on the `read()` content or summing `len()` of lines).

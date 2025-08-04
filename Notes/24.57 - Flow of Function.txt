@@ -1,0 +1,102 @@
+### **Topic: Introduction to Recursion**
+
+Recursion is one of the most important and foundational topics in Data Structures and Algorithms (DSA). While it can be challenging initially, mastering it is crucial for future success.
+
+-----
+
+### **Why is Recursion Important?**
+
+1.  **Foundation for Advanced DSA**: It is used extensively in complex data structures and algorithms:
+      * Linked Lists, Stacks, and Queues.
+      * Trees (most tree problems are solved using recursion).
+2.  **Prerequisite for Dynamic Programming (DP)**: DP is a critical topic for interviews at top tech companies (Google, Amazon, etc.), and its core concepts are built directly on recursion. A poor understanding of recursion leads to difficulties with DP.
+3.  **A New Way of Thinking**: It shifts the problem-solving approach from a simple, linear flow to a different, more abstract way of thinking.
+
+**Instructor's Note:** It's normal to find recursion difficult at first. The key is to be patient, not give up, and focus on visualizing the process.
+
+-----
+
+### **Reviewing Function Behavior (Prerequisite for Recursion)**
+
+Before diving into recursion, it's essential to understand two key principles about how functions work in Python.
+
+#### **The Problem Scenario**
+
+  * **Goal**: Print numbers from 5 down to 1.
+  * **Constraints**:
+    1.  You must use a pre-defined function that can only print one number at a time.
+    2.  You are only allowed to make a single initial function call in your main script.
+
+#### **Solution using a "Chain" of Function Calls**
+
+To meet the constraints, we can define multiple, similar functions where each one calls the next in the sequence.
+
+```python
+# Function definitions
+def print_num_1(n):
+    print(n)
+    # This is the last function in the chain
+
+def print_num_2(n):
+    print(n)
+    print_num_1(n - 1) # Calls the next function
+
+def print_num_3(n):
+    print(n)
+    print_num_2(n - 1) # Calls the next function
+
+def print_num_4(n):
+    print(n)
+    print_num_3(n - 1) # Calls the next function
+
+def print_num_5(n):
+    print(n)
+    print_num_4(n - 1) # Calls the next function
+
+# The single initial function call
+print_num_5(5)
+```
+
+**Output:**
+
+```
+5
+4
+3
+2
+1
+```
+
+-----
+
+### **How This Works: The Call Stack**
+
+The Python Tutor visualization demonstrates a critical concept: the **call stack**.
+
+1.  When `print_num_5(5)` is called, a memory block for it is created on the call stack. It executes its `print(5)` statement.
+2.  It then calls `print_num_4(4)`. **Crucially, `print_num_5` does not get removed from memory.** It is paused and waits for `print_num_4` to complete its work and return.
+3.  A new memory block for `print_num_4` is placed on *top* of the stack. It prints `4` and then calls `print_num_3`.
+4.  This process continues, with each new function call being added to the top of the stack. At its peak, the stack contains all five functions (`print_num_5` at the bottom, `print_num_1` at the top).
+5.  Once `print_num_1` finishes, its work is done, and it is removed (popped) from the stack.
+6.  Control returns to `print_num_2`, which has now completed its last line. It is then popped from the stack.
+7.  This "unwinding" continues until `print_num_5` finally finishes and is popped from the stack, leaving it empty.
+
+-----
+
+### **Key Takeaways from the Function Example**
+
+1.  **A function can call another function from within itself.** (e.g., `print()` is a function called within our custom functions).
+2.  **A function stays in memory (on the call stack) until it has been *fully* executed.** If it calls another function, it must wait for that function to finish before it can finish.
+
+### **The Bridge to Recursion**
+
+The "chain of functions" solution works, but it violates the **DRY (Don't Repeat Yourself)** principle. All five functions are doing almost the exact same work:
+
+1.  Print a number.
+2.  Call another function with `n-1`.
+
+This observation leads to the fundamental question of recursion:
+
+> **"If a function is doing the same work over and over, can it just call itself?"**
+
+This is what recursion is all about and will be the topic of the next discussion.

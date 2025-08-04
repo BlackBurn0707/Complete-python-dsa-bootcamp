@@ -1,0 +1,113 @@
+### **Topic: Can a Function Call Itself?**
+
+This lesson answers the question from the previous class and introduces the core mechanics of recursion.
+
+**The answer is YES, a function can call itself.** This process is known as **recursion**.
+
+-----
+
+### **The First Recursive Experiment**
+
+To test this, the "chain of functions" code from the last lesson was simplified into a single function that calls itself.
+
+**Initial Code:**
+
+```python
+def print_num(n):
+    print(n)
+    print_num(n - 1) # The function calls itself
+
+print_num(5)
+```
+
+#### **Result and Error**
+
+  * **Partial Success**: The code successfully prints numbers from 5 down to 1.
+  * **The Error**: The program does not stop and continues printing negative numbers until it crashes with a `RecursionError: maximum recursion depth exceeded`.
+
+-----
+
+### **Understanding the `RecursionError`**
+
+#### **1. Stack Memory and Stack Overflow**
+
+  * When a program runs, it is allocated a block of memory called the **stack memory**.
+  * Every time a function is called, a new "instance" or frame is created and pushed onto this stack. This frame holds the function's local variables and state.
+  * The function that made the call is **paused** and waits in memory for the new function to finish.
+  * If function calls are nested infinitely, the stack will eventually run out of space. This condition is called a **Stack Overflow**.
+  * Python prevents an actual stack overflow by setting a limit on the number of recursive calls (the "recursion depth"). Exceeding this limit raises a `RecursionError`.
+
+#### **2. The Problem: Infinite Recursion**
+
+In the initial code, there was no instruction to stop the function from calling itself. `print_num(1)` called `print_num(0)`, which called `print_num(-1)`, and so on, creating an infinite chain of calls that quickly exceeded Python's recursion depth limit.
+
+-----
+
+### **The Solution: The Base Case**
+
+To fix infinite recursion, every recursive function must have a **base case**.
+
+  * **Base Case**: A condition that tells the recursion when to stop. When the base case is met, the function stops calling itself and simply returns.
+
+**Corrected Code with a Base Case:**
+
+```python
+def print_num(n):
+    # BASE CASE: Stop when the number is 1.
+    if n == 1:
+        print(n)
+        return  # Stop the recursion and return
+
+    print(n)
+    print_num(n - 1) # Recursive call
+
+print_num(10) # Works for any starting number
+```
+
+**Output for `print_num(10)`:**
+
+```
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+```
+
+-----
+
+### **Visualizing the Correct Recursive Flow**
+
+With the base case, the call stack behaves correctly:
+
+1.  **Building the Stack**: `print_num(5)` calls `print_num(4)`, which calls `print_num(3)`, and so on. Each function call is added to the stack, waiting for the one it called to finish. The stack grows until `print_num(1)` is called.
+2.  **Hitting the Base Case**: The `if n == 1:` condition is met. `print_num(1)` prints `1` and then `return`s. It does *not* make another recursive call.
+3.  **Unwinding the Stack**:
+      * `print_num(1)` is finished and is popped off the stack.
+      * Control returns to `print_num(2)`, which has now completed its work. It is popped off the stack.
+      * Control returns to `print_num(3)`, which is then popped off.
+      * This process continues until the stack is empty.
+
+-----
+
+### **Formal Definitions of Recursion**
+
+1.  **Simple Definition**: "Recursion is a function calling itself."
+
+2.  **Problem-Solving Definition (More Important)**:
+
+    > **"Recursion is when the solution to a problem depends on the solution to smaller instances of the *same problem*."**
+
+    In our example, the problem of printing from 5 to 1 (`print_num(5)`) depends on solving the smaller, identical problem of printing from 4 to 1 (`print_num(4)`).
+
+### **Key Learnings**
+
+  * Functions wait in memory (on the call stack) until the functions they have called are fully resolved.
+  * A function is only removed (popped) from the stack memory after it has completely finished its execution.
+
+**Next Steps**: Applying this understanding to solve a classic problem: finding the factorial of a number using recursion.

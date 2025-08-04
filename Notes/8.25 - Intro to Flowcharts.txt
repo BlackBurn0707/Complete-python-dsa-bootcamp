@@ -1,0 +1,74 @@
+The module introduces the basics of problem-solving through flowcharts, emphasizing their role in visualizing algorithms.
+
+Basics of Problem Solving: Flowcharts
+1. Introduction to Flowcharts
+	• Definition: A flowchart is a graphical representation of any process, system, or algorithm.
+	• Purpose: 
+		○ To visualize how to solve a problem.
+		○ To make the process easier to follow and understand.
+		○ To represent a sequence of steps needed to complete a task using symbols and arrows.
+	• Key Advantage: Flowcharts are universally understood, even by individuals without programming knowledge, making them excellent for explaining complex processes. They can simplify the visualization of complex algorithms.
+	
+2. Components of a Flowchart
+Flowcharts use standardized symbols, each representing a specific type of operation or step.
+	• Terminal (Oval/Rounded Rectangle): 
+		○ Represents the start and stop points of the flowchart.
+		○ Example: "Start", "End".
+	• Input/Output (Parallelogram): 
+		○ Used for operations that involve inputting data into the process or displaying output.
+		○ Example: "Input NUM1", "Display Result".
+	• Process (Rectangle): 
+		○ Represents any action, operation, or process step. This is where calculations, assignments, or data manipulations occur.
+		○ Example: "Add NUM1 and NUM2", "Calculate Average".
+	• Decision (Diamond): 
+		○ Indicates a point where a decision needs to be made. It has one entry point and typically two exit paths (e.g., "True"/"Yes" and "False"/"No"), based on a condition.
+		○ Example: "Is NUM1 > NUM2?".
+	• Arrow (Flow Line): 
+		○ Connects different flowchart components, showing the direction or sequence of the flow.
+	• Connector (Small Circle): 
+		○ Used to connect parts of a flowchart that are on different pages or in different sections of the same page, preventing messy lines. (Not explicitly used in the example, but mentioned as a component).
+		
+3. Example: Display Maximum of Two Numbers
+This example demonstrates how to create a flowchart to find the maximum of two given numbers.
+	• Start: (Terminal) - Start
+	• Input NUM1: (Input/Output) - Input NUM1
+	• Input NUM2: (Input/Output) - Input NUM2
+	• Decision: (Decision) - Is NUM1 > NUM2?
+		○ If True: (Arrow) -> Display NUM1 (Input/Output)
+		○ If False: (Arrow) -> Display NUM2 (Input/Output)
+	• Connector: (Arrow) - Both "Display" boxes lead to a common connector (implicitly, or explicitly drawn).
+	• Stop: (Terminal) - Stop
+Flow (simplified textual representation):
+Start
+  |
+  V
+Input NUM1
+  |
+  V
+Input NUM2
+  |
+  V
+Is NUM1 > NUM2?
+/       \
+Yes       No
+/         \
+V           V
+Display NUM1 Display NUM2
+\ /
+\ /
+V V
+(Join Point/Connector)
+|
+V
+Stop
+```
+4. Assignment: Flowchart to Add Two Numbers
+The user is tasked with creating a flowchart for a simpler problem: adding two numbers.
+	• Hint: 
+		○ It will start with a Start terminal.
+		○ It will take two inputs (NUM1, NUM2).
+		○ It will have a process box for the addition operation (e.g., SUM = NUM1 + NUM2).
+		○ It will have an output box to display the result.
+		○ It will end with a Stop terminal.
+		○ No decision box is needed for this simple addition.
+This exercise reinforces the basic flowchart components and their usage.

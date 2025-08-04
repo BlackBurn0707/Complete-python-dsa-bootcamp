@@ -1,0 +1,79 @@
+Of course. Here are the notes from the video lecture on counting the digits of a number using recursion.
+
+### **Problem: Count the Number of Digits Recursively**
+
+Write a recursive program to count the number of digits in a given integer `n`.
+
+  * **Example 1:** `n = 123`, Output: `3`
+  * **Example 2:** `n = 31584`, Output: `5`
+
+-----
+
+### **1. The Recurrence Relation**
+
+The key to solving this recursively is to break the problem into a smaller, identical problem. We can observe that the number of digits in any number `n` is simply **1 plus the number of digits in the rest of the number** (i.e., the number `n` with its last digit removed).
+
+  * **Logic:** `count_digits(123) = 1 + count_digits(12)`
+  * **General Form:** `count_digits(n) = 1 + count_digits(n / 10)`
+
+To remove the last digit from an integer in Python, we can use integer division: `int(n / 10)` or `n // 10`.
+
+#### **Recursion Tree Example**
+
+A simple way to visualize this breakdown is with a recursion tree:
+`123` → `12` → `1`
+
+-----
+
+### **2. The Base Case**
+
+Defining the correct base case is the most critical step.
+
+  * **Simplest Case:** For any single-digit number from 1 to 9, the count of digits is **1**.
+  * **Edge Case for `n=0`:** The number 0 has one digit. However, in the context of our recurrence relation (`n // 10`), a single-digit number like `9` will become `0` in the next recursive call. We must handle `0` correctly to avoid miscounts.
+
+#### **Handling a Faulty Base Case**
+
+It's important to have a specific base case for single-digit numbers. If we only had a base case like `if n == 0: return 1`, consider the input `n=9`:
+
+1.  `count_digits(9)` is called. It's not 0.
+2.  It calls `count_digits(9 // 10)`, which is `count_digits(0)`.
+3.  `count_digits(0)` hits the base case and returns `1`.
+4.  The original `count_digits(9)` call receives `1` and calculates `1 + 1`, returning an incorrect answer of `2`.
+
+**The Correct Base Cases:**
+
+1.  If the number is between 1 and 9 (inclusive), return 1.
+2.  If the number is 0, return 0 (or 1, depending on problem requirements, but 0 works better with the recurrence relation). It's always good to clarify this with an interviewer.
+
+-----
+
+### **3. The Python Code**
+
+```python
+def count_digits(n):
+    # Base Case 1: For handling the number 0.
+    if n == 0:
+        return 0 # Or 1, if a single 0 should be counted as one digit.
+
+    # Base Case 2: For any single-digit number.
+    if n >= 1 and n <= 9:
+        return 1
+
+    # Recursive Step: 1 + the number of digits in the rest of the number.
+    small_answer = count_digits(n // 10)
+    return 1 + small_answer
+
+# --- Examples ---
+print(f"Number of digits in 123 is: {count_digits(123)}")
+print(f"Number of digits in 9 is: {count_digits(9)}")
+print(f"Number of digits in 987654 is: {count_digits(987654)}")
+```
+
+**Output:**
+
+```
+Number of digits in 123 is: 3
+Number of digits in 9 is: 1
+Number of digits in 987654 is: 6
+```

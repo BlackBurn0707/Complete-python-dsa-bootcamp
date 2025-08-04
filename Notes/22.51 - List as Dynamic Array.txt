@@ -1,0 +1,52 @@
+## Understanding Data Structures and Custom Implementation
+
+The speaker aims to connect previous understanding of arrays, loops, and built-in data structures to demonstrate how to create custom data structures. This will be an in-depth exploration for many, crucial for understanding the internal workings of data structures. The concepts covered will be foundational for implementing more complex structures like linked lists, stacks, queues, and trees. The explanation will be slow, visual, and thorough to ensure complete understanding.
+
+The primary goal is to show how to implement a data structure in Python using **Object-Oriented Programming (OOP)** concepts, specifically **classes**. Classes in Python are referred to as **custom data types**, allowing users to define their own types like `Person` or `Student`, similar to built-in types such as integers, lists, and strings. This implementation will involve creating a custom version of Python's built-in `list`. Prior experience with OOP questions, like implementing a banking system or complex number class, will be beneficial for understanding how methods add functionality to custom data types.
+
+---
+
+## Shortcomings of Arrays and the Concept of Dynamic Arrays
+
+The discussion transitions to the two main shortcomings of arrays compared to lists:
+
+### 1. Fixed Size of Arrays
+Arrays have a **fixed size**, meaning their memory allocation is static. In contrast, Python lists overcome this limitation by behaving as **dynamic arrays**.
+
+* **Dynamic Array Mechanism:** As elements are added, if the current memory allocated for the list is full, a larger memory block is allocated, and existing elements are copied to the new location. The speaker illustrates this doubling of size (e.g., from 2 to 4, then to 8) and emphasizes the **copying** process involved when resizing.
+* **Demonstration in VS Code:**
+    * The `sys.getsizeof()` function is used to show the memory footprint of a list.
+    * An empty list `L1` is created, and its initial size is printed.
+    * A loop appends integers from 0 to 16 to `L1`.
+    * The size of `L1` is printed after each append operation.
+    * **Observation:** The size of the list increases dynamically (e.g., 56 -> 88 -> 120 -> 184 bytes), demonstrating that Python lists are dynamic arrays that allocate more memory as needed. This memory increase doesn't always strictly double but increases by a factor (e.g., 4 or 8) for better memory management. `sys.getsizeof()` returns the size in bytes.
+
+---
+
+### 2. Homogeneous Nature of Arrays
+Arrays are generally **homogeneous**, meaning they can only store elements of a single data type.
+
+* **Storage by Value (Call by Value):** In traditional arrays (like in C++ or Java), values are stored directly at memory locations. When an array is declared for a specific type (e.g., integer), it allocates memory blocks of a fixed size (e.g., 4 bytes for an integer). This prevents storing different data types, such as a string larger than 4 bytes, in the same array.
+* **Storage by Reference (Call by Reference) in Python Lists:** Python lists, however, store **references (memory addresses)** to objects rather than the objects themselves.
+    * **Demonstration in VS Code:**
+        * An integer `a = 1` is created.
+        * `L1.append(1)` is executed.
+        * The `id()` function (which returns the memory address of an object) is used to print the IDs of:
+            * `id(1)`
+            * `id(a)`
+            * `id(L1[0])`
+        * **Observation:** All three print the same ID, proving that Python stores references. When `a = 2` is assigned, `a` then points to a new memory location for the value `2`, while `L1[0]` still points to the original location of `1`.
+        * **Implication:** Because Python lists store references, these references can point to objects of **any data type**. This allows lists to be heterogeneous (store different types), as demonstrated by appending a string "Python" to a list already containing an integer.
+    * **Performance Consideration:** Storing by reference can be slightly slower than storing by value because an extra step (dereferencing the address) is required to access the actual value. However, for most real-world applications (web, mobile), this performance difference is negligible.
+
+---
+
+## Goal: Implementing a Custom List
+
+The overall aim is to implement a custom list in Python, mimicking the functionality of Python's built-in list methods (e.g., `append`, `clear`, `copy`). This will provide a practical understanding of how data structures work internally.
+
+---
+
+## Conclusion and Next Steps
+
+The speaker reiterates the key differences between arrays and lists (fixed vs. dynamic size, homogeneous vs. heterogeneous) and how Python lists leverage dynamic arrays and reference-based storage. While arrays and lists are often used synonymously by end-users, understanding their internal mechanisms is crucial. The next video will focus on the coding implementation, building a class that represents a custom list. The speaker encourages viewers to complete OOP exercises, especially those involving complex numbers, to prepare for the upcoming coding session.

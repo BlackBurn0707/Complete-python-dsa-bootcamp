@@ -1,0 +1,102 @@
+Syntax and Semantics in Python
+1. Definitions
+	• Syntax: Refers to the set of rules that define the correct structure of a program in a language. It's about the correct arrangement of words and symbols in the code. 
+		○ Example of Syntax Error: Using an undefined variable.
+	• Semantics: Refers to the meaning or interpretation of symbols, characters, and commands in a language. It's about what the code is supposed to do when it runs.
+	
+2. Comments in Python
+Comments are used to add explanatory notes within the code, ignored by the interpreter.
+	• Single-line Comments: Start with a hash symbol (#). 
+		○ Example: # This is a single-line comment
+	• Multi-line Comments: Enclosed within triple quotes (''' or """). 
+		○ Example: 
+Python
+
+'''
+This is a multi-line comment
+spanning multiple lines.
+'''
+		○ Note: Triple quotes primarily work as multi-line string literals and are often used as multi-line comments in .py files. They might not behave as comments in Jupyter Notebook cells; single-line comments (#) are universally applicable.
+
+Basic Syntax Rules in Python
+1. Case Sensitivity
+	• Python is case-sensitive. This means name and Name are treated as different variables (identifiers). 
+		○ Example: 
+Python
+
+name = "Chris"
+Name = "Nick"
+print(name)  # Output: Chris
+print(Name)  # Output: Nick
+		
+2. Indentation
+	• Python uses indentation to define blocks of code (e.g., if statements, for loops, function definitions, class definitions).
+	• Unlike other languages that use braces ({}), Python relies on consistent indentation (commonly four spaces or a tab).
+	• Indentation Error: Incorrect indentation will lead to an IndentationError. 
+		○ Example: 
+Python
+
+age = 32
+if age > 30:
+    print("Age is greater than 30") # Correct indentation
+# print("This is outside the if block") # Incorrectly indented would cause error if expected inside
+		○ Correct Example of Indentation: 
+Python
+
+if True:
+    print("This is correct indentation")
+    if False: # This inner if block requires further indentation
+        print("This will not print")
+print("Outside the if block")
+
+Output: 
+This is correct indentation
+Outside the if block
+		
+3. Line Continuation
+	• Statements can be extended across multiple lines using a backslash (\). 
+		○ Example: 
+Python
+
+total = 1 + 2 + 3 + \
+        4 + 5 + 6
+print(total) # Output: 21
+		
+4. Multiple Statements on a Single Line
+	• You can place multiple statements on a single line by separating them with a semicolon (;). 
+		○ Example: 
+Python
+
+x = 5; y = 10; z = x + y
+print(z) # Output: 15
+
+Understanding Semantics in Python
+1. Variable Assignment
+	• When you assign a value to a variable, Python automatically determines its data type at runtime. This is known as dynamic typing. 
+		○ Example: 
+Python
+
+age = 32    # age is inferred as an integer (int)
+name = "Chris" # name is inferred as a string (str)
+	• You can check the type of a variable using the type() function. 
+		○ Example: 
+Python
+
+print(type(age)) # Output: <class 'int'>
+print(type(name)) # Output: <class 'str'>
+		
+2. Type Inference (Dynamic Typing)
+	• Python infers the type of a variable at runtime. This allows a variable to hold different types of values throughout its lifecycle. 
+		○ Example: 
+Python
+
+variable = 10
+print(type(variable)) # Output: <class 'int'>
+
+variable = "Chris"
+print(type(variable)) # Output: <class 'str'>
+
+Common Syntax Errors and How to Avoid Them
+	• IndentationError: Occurs when indentation is incorrect or inconsistent. Always ensure correct indentation for code blocks.
+	• NameError: Occurs when you try to use a variable that has not been defined. 
+		○ Example: a = b (if b is not defined) will raise a NameError.
