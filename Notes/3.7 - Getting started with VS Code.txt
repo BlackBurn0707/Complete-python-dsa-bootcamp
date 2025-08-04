@@ -37,12 +37,13 @@ The speaker also demonstrates how to set up Jupyter notebooks within VS Code.
 	• ipykernel provides the kernel necessary for Jupyter notebooks to execute Python code.
 	• To install it, activate your venv environment in the terminal and run: pip install ipykernel
 	• Once ipykernel is installed, you can run your Jupyter notebook cells successfully.
-	
+
 4. Managing Project Dependencies with requirements.txt
 	• The speaker recommends creating a requirements.txt file in your project's root directory.
 	• This file will list all the packages your project depends on (e.g., ipykernel).
 	• In the future, you can add other packages like pandas and numpy to this file.
 	• You can then install all listed packages using pip install -r requirements.txt.
+	• You can then freeze all installed packages using pip freeze > requirements.txt
 
 Summary of the Session
 	• Learned how to create a dedicated Python environment using conda for project isolation.
