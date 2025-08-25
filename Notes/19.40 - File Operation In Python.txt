@@ -225,15 +225,3 @@ The `w+` mode allows both writing and reading. After writing, the file cursor (t
     ```
 
 -----
-
-### **7. Assignment: File Analysis**
-
-**Task:** Read a text file and count the number of lines, words, and characters.
-
-This involves:
-
-1.  Opening the file in read mode.
-2.  Iterating through lines or reading the entire content.
-3.  Counting lines (either by iterating or by splitting `read()` content by `\n`).
-4.  Counting words (splitting lines or full content by whitespace).
-5.  Counting characters (using `len()` on the `read()` content or summing `len()` of lines).

@@ -1,6 +1,7 @@
 ## Python File Path Operations (using the `os` module)
 
-The `os` module in Python provides a way to interact with the operating system, including functionalities for working with file paths, directories, and environmental variables. It's crucial for creating robust and platform-independent file management in your applications.
+The `os` module in Python provides a way to interact with the operating system, including functionalities for working with file paths, directories, 
+and environmental variables. It's crucial for creating robust and platform-independent file management in your applications.
 
 -----
 
